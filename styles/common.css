@@ -1,0 +1,15 @@
+@import '~bootstrap/dist/css/bootstrap.css';
+/*@import '~bootstrap-icons/bootstrap-icons.svg';*/
+
+
+body {
+    font-size: 14px;
+    color: #000000;
+    background-color: #ffffff;
+}
+
+h1 {
+    font-size: 40px;
+    line-height: 47px;
+    color: #052C65;
+}

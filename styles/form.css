@@ -1,0 +1,45 @@
+.form-floating::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 58px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+
+
+    background-repeat: no-repeat;
+    background-position: center;
+
+    background-color: #E9ECEF;
+    border-radius: 3px 0 0 3px;
+}
+
+.form-floating.name-block::before {
+    /*background-image: url('../images/icons/bootstrap-icons.svg#person');*/
+    background-image: url('../images/icons/person.svg');
+}
+
+.form-floating.email-block::before {
+    background-image: url('../images/icons/email.svg');
+}
+
+.form-floating.password-block::before {
+    background-image: url('../images/icons/password.svg');
+}
+
+.password {
+    background: url("../images/icons/password.svg") no-repeat left;
+    background-size: 58px;
+}
+
+.form-floating > .form-control.email,
+.form-floating > .form-control.password,
+.form-floating > .form-control.name {
+    padding-left: 70px;
+}
+
+.form-floating > .label {
+    margin-left: 70px;
+}
+
