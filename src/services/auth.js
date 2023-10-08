@@ -48,6 +48,7 @@ export class Auth {
                 if (result && !result.error) {
                     Auth.removeTokens();
                     localStorage.removeItem(Auth.userInfoKey);
+                    window.location.href = '#/login';
                     return true;
                 }
             }

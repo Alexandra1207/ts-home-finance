@@ -13,3 +13,7 @@ h1 {
     line-height: 47px;
     color: #052C65;
 }
+
+.sidebar {
+    width: 280px;
+}

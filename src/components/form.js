@@ -101,7 +101,7 @@ export class Form {
                     const fullName = this.fields.find(item => item.name === 'name').element.value;
                     const [name, lastName] = fullName.split(' ');
 
-                    const result = await CustomHttp.request('http://localhost:3000/api/signup', 'POST', {
+                    const result = await CustomHttp.request(config.host + '/signup', 'POST', {
                         name: name,
                         lastName: lastName,
                         email: email,

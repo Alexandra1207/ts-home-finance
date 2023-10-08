@@ -25,6 +25,7 @@
   "dependencies": {
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.1",
+    "chart.js": "^4.4.0",
     "css-loader": "^6.8.1",
     "style-loader": "^3.3.3"
   }
