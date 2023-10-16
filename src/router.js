@@ -10,15 +10,7 @@ export class Router {
         this.titleElement = document.getElementById('page-title');
 
         this.routes = [
-            {
-                route: '#/',
-                title: 'Главная',
-                template: 'templates/index.html',
-                styles: 'styles/index.css',
-                load: () => {
-                    new Main();
-                }
-            },
+
             {
                 route: '#/signup',
                 title: 'Регистрация',
@@ -44,11 +36,28 @@ export class Router {
                 load: () => {
                     Auth.logout();
                 }
-            }
+            },
+            {
+                route: '#/',
+                title: 'Главная',
+                template: 'templates/index.html',
+                styles: 'styles/index.css',
+                load: () => {
+                    new Main();
+                }
+            },
         ]
     }
 
     async openRoute() {
+
+        const urlRoute = window.location.hash.split('?')[0];
+        if (urlRoute === '') {
+            await Auth.logout();
+            window.location.href = '#/login';
+            return;
+        }
+
         const newRoute = this.routes.find(item => {
             return item.route === window.location.hash;
         });
@@ -56,7 +65,6 @@ export class Router {
         if (newRoute.sidebar === false) {
             this.sidebarElement.classList.add('d-none');
             this.contentElement.classList.remove('w-auto');
-            // this.sidebarElement.style.display = 'none';
         } else {
             this.sidebarElement.classList.remove('d-none');
             this.contentElement.classList.add('w-auto');

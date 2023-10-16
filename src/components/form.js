@@ -131,13 +131,14 @@ export class Form {
                     if (result.error || !result.tokens.accessToken || !result.tokens.refreshToken || !result.user.name || !result.user.lastName || !result.user.id) {
                         throw new Error(result.message);
                     }
+                    Auth.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
+                    console.log(result.tokens.refreshToken);
+                    Auth.setUserInfo({
+                        fullName: result.user.name + ' ' + result.user.lastName,
+                        userId: result.user.id
+                    })
+                    location.href = '#/'
                 }
-                Auth.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
-                Auth.setUserInfo({
-                    fullName: result.user.name + ' ' + result.user.lastName,
-                    userId: result.user.id
-                })
-                location.href = '#/'
 
             } catch (error) {
                 return console.log(error);

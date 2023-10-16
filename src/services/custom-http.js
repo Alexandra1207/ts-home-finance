@@ -19,10 +19,8 @@ export class CustomHttp {
         if (body) {
             params.body = JSON.stringify(body);
         }
-        console.log(params);
 
         const response = await fetch(url, params);
-
 
         if (response.status < 200 && response.status >= 300) {
             if (response.status === 401) {
@@ -40,3 +38,4 @@ export class CustomHttp {
 
     }
 }
+

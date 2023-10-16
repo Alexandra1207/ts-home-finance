@@ -1,78 +1,43 @@
-<!--<div class="container-fluid">-->
-<!--    <div class="row flex-nowrap">-->
-<!--        <div class="d-flex flex-column flex-shrink-0 p-3 bg-light min-vh-100" style="width: 280px;">-->
-<!--            <a href="#/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">-->
-<!--                <img class="ms-4 mt-4" src="images/logo.svg" alt="логотип">-->
-<!--            </a>-->
-<!--            <hr>-->
-<!--            <ul class="nav nav-pills mb-auto flex-column">-->
-<!--                <li class="nav-item">-->
-<!--                    <a href="#/" class="nav-link active" aria-current="page">-->
-<!--                        <svg class="bi pe-none me-2" width="16" height="16">-->
-<!--                            <use xlink:href="images/icons/bootstrap-icons.svg#house"/>-->
-<!--                        </svg>-->
-<!--                        Главная-->
-<!--                    </a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="#/" class="nav-link">-->
-<!--                        <svg class="bi pe-none me-2" width="16" height="16">-->
-<!--                            <use xlink:href="images/icons/bootstrap-icons.svg#cash-coin"/>-->
-<!--                        </svg>-->
-<!--                        Доходы & Расходы-->
-<!--                    </a>-->
-<!--                </li>-->
-
-<!--                <li class="rounded-2 overflow-hidden categories">-->
-<!--                    <button class="categories-btn btn btn-toggle d-inline-flex align-items-center border-0 w-100"-->
-<!--                            id="categories-btn" data-bs-toggle="collapse" data-bs-target="#home-collapse"-->
-<!--                            aria-expanded="false">-->
-<!--                        Категории-->
-<!--                    </button>-->
-<!--                    <div class="categories-items collapse" id="categories-items">-->
-<!--                        <ul class="btn-toggle-nav list-unstyled fw-normal">-->
-<!--                            <li><a href="#/" class="d-inline-flex text-decoration-none px-3 py-2 w-100">Доходы</a></li>-->
-<!--                            <li><a href="#/" class="d-inline-flex text-decoration-none px-3 py-2 w-100">Расходы</a></li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                </li>-->
-
-<!--            </ul>-->
-
-<!--            <div class="dropdown">-->
-<!--                <div class="balance fw-medium">Баланс: <span class="text-primary" id="balance">300$</span></div>-->
-<!--                <hr>-->
-<!--                <div class="d-flex align-items-center text-decoration-none">-->
-<!--                    <a href="#/logout" id="logout-link" class="person-block d-flex align-items-center justify-content-center">-->
-<!--                        <svg class="bi pe-none" width="16" height="16">-->
-<!--                            <use xlink:href="images/icons/bootstrap-icons.svg#person"/>-->
-<!--                        </svg>-->
-<!--                    </a>-->
-<!--                    <div id="profile">-->
-<!--                        RomanChernov-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--            </div>-->
-<!--            <div class="b-example-divider b-example-vr"></div>-->
-<!--        </div>-->
 <div class="col p-5">
-    <h1>Главная</h1>
+    <h1 class="mb-5">Главная</h1>
+    <div class="filter-block mb-5">
+        <button type="button" class="btn btn-outline-secondary me-3" id="today-btn">Сегодня</button>
+        <button type="button" class="btn btn-outline-secondary me-3" id="week-btn">Неделя</button>
+        <button type="button" class="btn btn-outline-secondary me-3" id="month-btn">Месяц</button>
+        <button type="button" class="btn btn-outline-secondary me-3" id="year-btn">Год</button>
+        <button type="button" class="btn btn-outline-secondary me-3 active" id="all-btn">Все</button>
+        <button type="button" class="btn btn-outline-secondary me-3" id="interval-btn">Интервал</button>
+
+        <div class="d-inline-block">
+            <div class="d-inline-block me-3">c</div>
+            <label class="border-bottom border-secondary text-secondary position-relative me-3 label-date" for="date-from" id="label-date-from">
+                Дата
+                <input type="date" id="date-from" class="d-none position-absolute input-date">
+            </label>
+            <div class="d-inline-block me-3">по</div>
+            <label class="border-bottom border-secondary text-secondary position-relative label-date" for="date-to" id="label-date-to">
+                Дата
+                <input type="date" id="date-to" class="d-none position-absolute input-date">
+            </label>
+        </div>
+    </div>
+
     <div class="content-page d-flex">
         <div class="pie-block text-center">
             <h2 class="mb-3">Доходы</h2>
-            <div class="pie border-end">
+            <div class="pie border-end" id="expense-container">
                 <canvas id="pieChartExpense"></canvas>
             </div>
         </div>
         <div class="pie-block text-center">
             <h2 class="mb-3">Расходы</h2>
-            <div class="pie">
+            <div class="pie" id="income-container">
                 <canvas id="pieChartIncome"></canvas>
             </div>
 
         </div>
     </div>
+
 
 </div>
 <!--    </div>-->

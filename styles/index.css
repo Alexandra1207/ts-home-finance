@@ -113,3 +113,20 @@ div {
     padding: 0 84px;
 
 }
+
+.filter-block button {
+    width: 100px;
+}
+
+.date-input-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.input-date {
+    left: 0;
+}
+
+.label-date {
+    cursor: pointer;
+}
