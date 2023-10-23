@@ -1,0 +1,97 @@
+<h1 class="mb-5">Доходы и расходы</h1>
+<div class="buttons-block mb-5">
+    <button type="button" class="btn bg-success text-white me-2" id="create-income">Создать доход</button>
+    <button type="button" class="btn bg-danger text-white" id="create-expense">Создать расход</button>
+</div>
+<div class="filter-block mb-5">
+    <button type="button" class="btn btn-outline-secondary me-3 mb-3" id="today-btn">Сегодня</button>
+    <button type="button" class="btn btn-outline-secondary me-3 mb-3" id="week-btn">Неделя</button>
+    <button type="button" class="btn btn-outline-secondary me-3 mb-3" id="month-btn">Месяц</button>
+    <button type="button" class="btn btn-outline-secondary me-3 mb-3" id="year-btn">Год</button>
+    <button type="button" class="btn btn-outline-secondary me-3 mb-3 active" id="all-btn">Все</button>
+    <button type="button" class="btn btn-outline-secondary me-3 mb-3" id="interval-btn">Интервал</button>
+
+    <div class="d-inline-block">
+        <div class="d-inline-block me-3">c</div>
+        <label class="border-bottom border-secondary text-secondary position-relative me-3 label-date" for="date-from"
+               id="label-date-from">
+            Дата
+            <input type="date" id="date-from" class="d-none position-absolute input-date">
+        </label>
+        <div class="d-inline-block me-3">по</div>
+        <label class="border-bottom border-secondary text-secondary position-relative label-date" for="date-to"
+               id="label-date-to">
+            Дата
+            <input type="date" id="date-to" class="d-none position-absolute input-date">
+        </label>
+    </div>
+</div>
+
+<table class="table text-center">
+    <thead>
+    <tr>
+        <th scope="col" class="d-none d-sm-table-cell">№ операции</th>
+        <th scope="col" class="d-none d-md-table-cell">Тип</th>
+        <th scope="col">Категория</th>
+        <th scope="col">Сумма</th>
+        <th scope="col" class="d-none d-sm-table-cell">Дата</th>
+        <th scope="col" class="d-none d-md-table-cell">Комментарий</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row" class="d-none d-sm-table-cell">1</th>
+        <td class="text-success d-none d-md-table-cell">доход</td>
+        <td>зарплата</td>
+        <td>500$</td>
+        <td class="d-none d-sm-table-cell">11.09.2022</td>
+        <td class="d-none d-md-table-cell"></td>
+        <td>
+            <button type="submit" class="bg-transparent border-0 me-2 btn-icon trash-btn">
+                <svg class="bi pe-none" width="16" height="16">
+                    <use xlink:href="images/icons/bootstrap-icons.svg#trash"/>
+                </svg>
+            </button>
+            <button type="submit" class="bg-transparent border-0 btn-icon modify-btn">
+                <svg class="bi pe-none me-2 icon" width="16" height="16">
+                    <use xlink:href="images/icons/bootstrap-icons.svg#pencil"/>
+                </svg>
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row" class="d-none d-sm-table-cell">2</th>
+        <td class="text-danger d-none d-md-table-cell">расход</td>
+        <td>жильё</td>
+        <td>2500$</td>
+        <td class="d-none d-sm-table-cell">12.09.2022</td>
+        <td class="d-none d-md-table-cell"></td>
+        <td>
+            <button type="submit" class="bg-transparent border-0 me-2 btn-icon trash-btn">
+                <svg class="bi pe-none" width="16" height="16">
+                    <use xlink:href="images/icons/bootstrap-icons.svg#trash"/>
+                </svg>
+            </button>
+            <button type="submit" class="bg-transparent border-0 btn-icon modify-btn">
+                <svg class="bi pe-none me-2" width="16" height="16">
+                    <use xlink:href="images/icons/bootstrap-icons.svg#pencil"/>
+                </svg>
+            </button>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+
+<div class="modal-content rounded-3 shadow p-5 modal-window d-none position-fixed top-50 start-50 bg-white translate-middle z-3" id="modal">
+    <div class="modal-body text-center fw-medium mb-3">
+        Вы действительно хотите удалить операцию?
+    </div>
+    <div class="text-center">
+        <button type="button" class="btn bg-primary text-white me-2" id="agree-delete-btn">Да, удалить</button>
+        <button type="button" class="btn bg-danger text-white" id="disagree-delete-btn">Не удалять</button>
+    </div>
+</div>
+
+<div class="z-2 d-none" id="myOverlay"></div>

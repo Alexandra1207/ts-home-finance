@@ -1,10 +1,10 @@
 .form-floating::before {
     content: "";
     position: absolute;
-    height: 100%;
+    height: 98%;
     width: 58px;
     top: 50%;
-    left: 0;
+    left: 1px;
     transform: translateY(-50%);
 
 
@@ -28,11 +28,6 @@
     background-image: url('../images/icons/password.svg');
 }
 
-.password {
-    background: url("../images/icons/password.svg") no-repeat left;
-    background-size: 58px;
-}
-
 .form-floating > .form-control.email,
 .form-floating > .form-control.password,
 .form-floating > .form-control.name {
@@ -41,5 +36,20 @@
 
 .form-floating > .label {
     margin-left: 70px;
+}
+
+@media (max-width: 998px) {
+    .col-8 {
+        width: 75% !important;
+    }
+    #content.p-5 {
+        padding: 0 !important;
+    }
+}
+
+@media screen and  (max-width: 769px) {
+    .col-8 {
+        width: 90% !important;
+    }
 }
 

@@ -26,7 +26,7 @@ export class Auth {
             }
         }
 
-        // this.removeTokens();
+        this.removeTokens();
         return false;
     }
 

@@ -2,47 +2,45 @@ import {Chart} from 'chart.js/auto';
 import {Auth} from "../services/auth.js";
 import config from "../../config/config.js";
 import {CustomHttp} from "../services/custom-http.js";
+import {Sidebar} from "./sidebar.js";
 
 
 export class Main {
     constructor() {
-        this.profileElement = document.getElementById('profile');
-        const userInfo = Auth.getUserInfo();
-        const accessToken = localStorage.getItem(Auth.accessTokenKey);
 
-        if (userInfo && accessToken) {
-            this.profileElement.innerText = userInfo.fullName;
-        } else {
-            location.href = '#/login';
-        }
+        Sidebar.sidebarButtons('main');
+        Sidebar.getSidebarInfo();
+        Sidebar.getBalance();
 
+        const expenseContainer = document.getElementById("expense-container");
+        expenseContainer.innerHTML = '<canvas id="pieChartExpense"></canvas>';
 
-        const that = this;
-        this.categoriesButton = document.getElementById("categories-btn");
-        this.categoriesButton.addEventListener("click", function () {
-            that.categoriesButton.classList.toggle("active");
-            document.getElementById("categories-items").classList.toggle("show");
-        });
+        const incomeContainer = document.getElementById("income-container");
+        incomeContainer.innerHTML = '<canvas id="pieChartIncome"></canvas>';
+
+        // this.expenseContainer = document.getElementById("expense-container");
+        // this.expenseContainer.innerHTML = '<canvas id="pieChartExpense"></canvas>';
+        //
+        // this.incomeContainer = document.getElementById("income-container");
+        // this.incomeContainer.innerHTML = '<canvas id="pieChartIncome"></canvas>';
 
         this.init();
+
 
     }
 
     init() {
-        this.getBalance();
+        // const expenseContainer = document.getElementById("expense-container");
+        // expenseContainer.innerHTML = '<canvas id="pieChartExpense"></canvas>';
+        //
+        // const incomeContainer = document.getElementById("income-container");
+        // incomeContainer.innerHTML = '<canvas id="pieChartIncome"></canvas>';
 
         this.showOperationPie('/categories/expense', 'expense', 'pieChartExpense');
         this.showOperationPie('/categories/income', 'income', 'pieChartIncome');
 
         const buttons = document.querySelectorAll('.btn');
         const that = this;
-
-        function formatDate(date) {
-            const year = date.getFullYear();
-            const month = ('0' + (date.getMonth() + 1)).slice(-2);
-            const day = ('0' + date.getDate()).slice(-2);
-            return year + '-' + month + '-' + day;
-        }
 
         const labelDateFrom = document.getElementById('label-date-from');
         const inputDateFrom = document.getElementById('date-from');
@@ -83,8 +81,6 @@ export class Main {
                 const intervalBtn = document.getElementById('interval-btn');
 
 
-                const today = formatDate(new Date());
-
                 if (button === allBtn) {
                     that.showOperationPie('/categories/expense', 'expense', 'pieChartExpense');
                     that.showOperationPie('/categories/income', 'income', 'pieChartIncome');
@@ -112,11 +108,18 @@ export class Main {
 
                 if (button === intervalBtn) {
                     if (inputDateFrom.value && inputDateTo.value) {
+                        labelDateFrom.classList.remove('text-danger');
+                        labelDateFrom.classList.remove('border-danger');
+                        labelDateTo.classList.remove('text-danger');
+                        labelDateTo.classList.remove('border-danger');
                         that.showOperationPie('/categories/expense', 'expense', 'pieChartExpense', '/operations?period=interval&dateFrom=' + inputDateFrom.value + '&dateTo=' + inputDateTo.value);
                         that.showOperationPie('/categories/income', 'income', 'pieChartIncome', '/operations?period=interval&dateFrom=' + inputDateFrom.value + '&dateTo=' + inputDateTo.value);
                     } else {
-                        if (!inputDateFrom.value) {
-                            labelDateFrom.style.color = 'red';
+                        if (!inputDateFrom.value || !inputDateTo.value) {
+                            labelDateFrom.classList.add('text-danger');
+                            labelDateFrom.classList.add('border-danger');
+                            labelDateTo.classList.add('text-danger');
+                            labelDateTo.classList.add('border-danger');
                         }
                     }
                 }
@@ -127,17 +130,8 @@ export class Main {
 
     }
 
-    async getBalance() {
-        const result = await CustomHttp.request(config.host + '/balance');
-        if (result) {
-            document.getElementById('balance').innerText = result.balance + '$';
-        } else {
-            document.getElementById('balance').innerText = 'Данные о балансе недоступны';
-        }
-    }
-
-
     async showOperationPie(responseAddress, operationsType, elementId, period = '/operations?period=all') {
+
         const arrayCategories = await CustomHttp.request(config.host + responseAddress);
         const allCategories = arrayCategories.map(item => item.title);
         const operations = await CustomHttp.request(config.host + period);
@@ -193,7 +187,5 @@ export class Main {
         });
 
     }
-
-
 }
 

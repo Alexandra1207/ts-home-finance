@@ -1,12 +1,12 @@
-<div class="col p-5">
+<div class="col">
     <h1 class="mb-5">Главная</h1>
-    <div class="filter-block mb-5">
-        <button type="button" class="btn btn-outline-secondary me-3" id="today-btn">Сегодня</button>
-        <button type="button" class="btn btn-outline-secondary me-3" id="week-btn">Неделя</button>
-        <button type="button" class="btn btn-outline-secondary me-3" id="month-btn">Месяц</button>
-        <button type="button" class="btn btn-outline-secondary me-3" id="year-btn">Год</button>
-        <button type="button" class="btn btn-outline-secondary me-3 active" id="all-btn">Все</button>
-        <button type="button" class="btn btn-outline-secondary me-3" id="interval-btn">Интервал</button>
+    <div class="filter-block mb-2">
+        <button type="button" class="btn btn-outline-secondary me-3 mb-3" id="today-btn">Сегодня</button>
+        <button type="button" class="btn btn-outline-secondary me-3 mb-3" id="week-btn">Неделя</button>
+        <button type="button" class="btn btn-outline-secondary me-3 mb-3" id="month-btn">Месяц</button>
+        <button type="button" class="btn btn-outline-secondary me-3 mb-3" id="year-btn">Год</button>
+        <button type="button" class="btn btn-outline-secondary me-3 mb-3 active" id="all-btn">Все</button>
+        <button type="button" class="btn btn-outline-secondary me-3 mb-3" id="interval-btn">Интервал</button>
 
         <div class="d-inline-block">
             <div class="d-inline-block me-3">c</div>
@@ -25,10 +25,11 @@
     <div class="content-page d-flex">
         <div class="pie-block text-center">
             <h2 class="mb-3">Доходы</h2>
-            <div class="pie border-end" id="expense-container">
+            <div class="pie" id="expense-container">
                 <canvas id="pieChartExpense"></canvas>
             </div>
         </div>
+        <div class="line"></div>
         <div class="pie-block text-center">
             <h2 class="mb-3">Расходы</h2>
             <div class="pie" id="income-container">
@@ -38,7 +39,5 @@
         </div>
     </div>
 
-
 </div>
-<!--    </div>-->
-<!--</div>-->
+

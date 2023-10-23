@@ -52,6 +52,7 @@ export class Form {
         });
 
         this.processElement = document.getElementById('process');
+
         this.processElement.onclick = function () {
             that.processForm();
         }
@@ -67,7 +68,6 @@ export class Form {
             element.removeAttribute('style');
             field.valid = true;
         }
-
     }
 
     matchPasswords() {
@@ -86,7 +86,13 @@ export class Form {
 
     validateForm() {
         const validForm = this.fields.every(item => item.valid);
-        return this.page === 'signup' ? this.matchPasswords() && validForm : validForm;
+        const isValid = (this.page === 'signup') ? this.matchPasswords() && validForm : validForm;
+        // if (isValid) {
+        //     this.processElement.removeAttribute('disabled');
+        // } else {
+        //     this.processElement.setAttribute('disabled', 'disabled');
+        // }
+        return isValid;
     }
 
 
