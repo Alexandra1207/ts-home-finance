@@ -3,7 +3,7 @@
     <button type="button" class="btn bg-success text-white me-2" id="create-income">Создать доход</button>
     <button type="button" class="btn bg-danger text-white" id="create-expense">Создать расход</button>
 </div>
-<div class="filter-block mb-5">
+<div class="filter-block mb-5 d-flex gap-3 align-items-center flex-wrap">
     <button type="button" class="btn btn-outline-secondary me-3 mb-3" id="today-btn">Сегодня</button>
     <button type="button" class="btn btn-outline-secondary me-3 mb-3" id="week-btn">Неделя</button>
     <button type="button" class="btn btn-outline-secondary me-3 mb-3" id="month-btn">Месяц</button>
@@ -27,62 +27,64 @@
     </div>
 </div>
 
-<table class="table text-center">
-    <thead>
-    <tr>
-        <th scope="col" class="d-none d-sm-table-cell">№ операции</th>
-        <th scope="col" class="d-none d-md-table-cell">Тип</th>
-        <th scope="col">Категория</th>
-        <th scope="col">Сумма</th>
-        <th scope="col" class="d-none d-sm-table-cell">Дата</th>
-        <th scope="col" class="d-none d-md-table-cell">Комментарий</th>
-        <th scope="col"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th scope="row" class="d-none d-sm-table-cell">1</th>
-        <td class="text-success d-none d-md-table-cell">доход</td>
-        <td>зарплата</td>
-        <td>500$</td>
-        <td class="d-none d-sm-table-cell">11.09.2022</td>
-        <td class="d-none d-md-table-cell"></td>
-        <td>
-            <button type="submit" class="bg-transparent border-0 me-2 btn-icon trash-btn">
-                <svg class="bi pe-none" width="16" height="16">
-                    <use xlink:href="images/icons/bootstrap-icons.svg#trash"/>
-                </svg>
-            </button>
-            <button type="submit" class="bg-transparent border-0 btn-icon modify-btn">
-                <svg class="bi pe-none me-2 icon" width="16" height="16">
-                    <use xlink:href="images/icons/bootstrap-icons.svg#pencil"/>
-                </svg>
-            </button>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row" class="d-none d-sm-table-cell">2</th>
-        <td class="text-danger d-none d-md-table-cell">расход</td>
-        <td>жильё</td>
-        <td>2500$</td>
-        <td class="d-none d-sm-table-cell">12.09.2022</td>
-        <td class="d-none d-md-table-cell"></td>
-        <td>
-            <button type="submit" class="bg-transparent border-0 me-2 btn-icon trash-btn">
-                <svg class="bi pe-none" width="16" height="16">
-                    <use xlink:href="images/icons/bootstrap-icons.svg#trash"/>
-                </svg>
-            </button>
-            <button type="submit" class="bg-transparent border-0 btn-icon modify-btn">
-                <svg class="bi pe-none me-2" width="16" height="16">
-                    <use xlink:href="images/icons/bootstrap-icons.svg#pencil"/>
-                </svg>
-            </button>
-        </td>
-    </tr>
+<div class="table-responsive table-block">
+    <table class="table text-center">
+        <thead>
+        <tr>
+            <th scope="col">№ операции</th>
+            <th scope="col">Тип</th>
+            <th scope="col">Категория</th>
+            <th scope="col">Сумма</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Комментарий</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td class="text-success">доход</td>
+            <td>зарплата</td>
+            <td>500$</td>
+            <td>11.09.2022</td>
+            <td></td>
+            <td class="text-nowrap">
+                <button type="submit" class="bg-transparent border-0 me-2 btn-icon trash-btn">
+                    <svg class="bi pe-none" width="16" height="16">
+                        <use xlink:href="images/icons/bootstrap-icons.svg#trash"/>
+                    </svg>
+                </button>
+                <button type="submit" class="bg-transparent border-0 btn-icon modify-btn">
+                    <svg class="bi pe-none me-2 icon" width="16" height="16">
+                        <use xlink:href="images/icons/bootstrap-icons.svg#pencil"/>
+                    </svg>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td class="text-danger">расход</td>
+            <td>жильё</td>
+            <td>2500$</td>
+            <td>12.09.2022</td>
+            <td></td>
+            <td>
+                <button type="submit" class="bg-transparent border-0 me-2 btn-icon trash-btn">
+                    <svg class="bi pe-none" width="16" height="16">
+                        <use xlink:href="images/icons/bootstrap-icons.svg#trash"/>
+                    </svg>
+                </button>
+                <button type="submit" class="bg-transparent border-0 btn-icon modify-btn">
+                    <svg class="bi pe-none me-2" width="16" height="16">
+                        <use xlink:href="images/icons/bootstrap-icons.svg#pencil"/>
+                    </svg>
+                </button>
+            </td>
+        </tr>
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 
 <div class="modal-content rounded-3 shadow p-5 modal-window d-none position-fixed top-50 start-50 bg-white translate-middle z-3" id="modal">
     <div class="modal-body text-center fw-medium mb-3">
@@ -95,3 +97,4 @@
 </div>
 
 <div class="z-2 d-none" id="myOverlay"></div>
+

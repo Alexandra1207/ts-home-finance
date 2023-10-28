@@ -5,8 +5,14 @@ export class Auth {
     static refreshTokenKey = 'refreshToken';
     static userInfoKey = 'userInfo';
 
+
     static async processUnauthorizedResponse() {
         const refreshToken = localStorage.getItem(this.refreshTokenKey);
+        console.log(refreshToken);
+
+        const rememberMe = JSON.parse(localStorage.getItem("userInfo")).rememberMe;
+        console.log(rememberMe);
+
         if (refreshToken) {
             const response = await fetch(config.host + '/refresh', {
                 method: 'POST',
@@ -14,10 +20,13 @@ export class Auth {
                     'Content-type': 'application/json',
                     'Accept': 'application/json',
                 },
-                body: JSON.stringify({refreshToken: refreshToken})
+                body: JSON.stringify({
+                    refreshToken: refreshToken,
+                    // rememberMe: rememberMe
+                })
             });
 
-            if (response && response.status ===200) {
+            if (response && response.status === 200) {
                 const result = await response.json();
                 if (result && !result.error) {
                     this.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
@@ -26,7 +35,7 @@ export class Auth {
             }
         }
 
-        this.removeTokens();
+        // this.removeTokens();
         return false;
     }
 

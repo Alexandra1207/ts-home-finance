@@ -1,5 +1,4 @@
 import {Chart} from 'chart.js/auto';
-import {Auth} from "../services/auth.js";
 import config from "../../config/config.js";
 import {CustomHttp} from "../services/custom-http.js";
 import {Sidebar} from "./sidebar.js";
@@ -12,24 +11,11 @@ export class Main {
         Sidebar.getSidebarInfo();
         Sidebar.getBalance();
 
-        const expenseContainer = document.getElementById("expense-container");
-        expenseContainer.innerHTML = '<canvas id="pieChartExpense"></canvas>';
-
-        const incomeContainer = document.getElementById("income-container");
-        incomeContainer.innerHTML = '<canvas id="pieChartIncome"></canvas>';
-
-        // this.expenseContainer = document.getElementById("expense-container");
-        // this.expenseContainer.innerHTML = '<canvas id="pieChartExpense"></canvas>';
-        //
-        // this.incomeContainer = document.getElementById("income-container");
-        // this.incomeContainer.innerHTML = '<canvas id="pieChartIncome"></canvas>';
-
         this.init();
-
-
     }
 
     init() {
+
         // const expenseContainer = document.getElementById("expense-container");
         // expenseContainer.innerHTML = '<canvas id="pieChartExpense"></canvas>';
         //

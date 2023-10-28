@@ -9,7 +9,6 @@ export class ModifyExpensesIncome {
         Sidebar.getSidebarInfo();
         Sidebar.getBalance();
 
-        // const createIncomeButton = document.getElementById('create-income');
         this.createButton.addEventListener('click', function() {
             location.href = '#/income-expenses'
         });

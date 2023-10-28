@@ -53,6 +53,7 @@ export class Form {
 
         this.processElement = document.getElementById('process');
 
+
         this.processElement.onclick = function () {
             that.processForm();
         }
@@ -63,9 +64,11 @@ export class Form {
 
         if (!element.value || !element.value.match(field.regex)) {
             element.style.borderColor = 'red';
+            element.parentElement.nextElementSibling.classList.remove('d-none');
             field.valid = false;
         } else {
             element.removeAttribute('style');
+            element.parentElement.nextElementSibling.classList.add('d-none');
             field.valid = true;
         }
     }
@@ -87,11 +90,11 @@ export class Form {
     validateForm() {
         const validForm = this.fields.every(item => item.valid);
         const isValid = (this.page === 'signup') ? this.matchPasswords() && validForm : validForm;
-        // if (isValid) {
-        //     this.processElement.removeAttribute('disabled');
-        // } else {
-        //     this.processElement.setAttribute('disabled', 'disabled');
-        // }
+        if (isValid) {
+            this.processElement.removeAttribute('disabled');
+        } else {
+            this.processElement.setAttribute('disabled', 'disabled');
+        }
         return isValid;
     }
 
@@ -133,15 +136,16 @@ export class Form {
                     rememberMe: rememberMe
                 })
 
+                console.log(result);
                 if (result) {
                     if (result.error || !result.tokens.accessToken || !result.tokens.refreshToken || !result.user.name || !result.user.lastName || !result.user.id) {
                         throw new Error(result.message);
                     }
                     Auth.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
-                    console.log(result.tokens.refreshToken);
                     Auth.setUserInfo({
                         fullName: result.user.name + ' ' + result.user.lastName,
-                        userId: result.user.id
+                        userId: result.user.id,
+                        rememberMe: rememberMe
                     })
                     location.href = '#/'
                 }

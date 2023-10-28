@@ -11,71 +11,35 @@ export class Sidebar {
         const categoriesItems = document.getElementById('categories-items');
         const incomeLink = document.getElementById("income-link");
         const expensesLink = document.getElementById('expenses-link');
+        const logoutLink = document.getElementById('logout-link');
+        const logoutModal = document.getElementById('logout-modal');
+        const agreeLogoutButton = document.getElementById('agree-logout-btn');
+        const cancelLogoutButton = document.getElementById('cancel-logout-btn');
 
         const burgerButton = document.querySelector('.burger-btn');
         const sidebar = document.querySelector('.sidebar');
         const headerLogoLink = document.querySelector('.header-logo-link');
 
-        function toggleSidebar() {
+
+        burgerButton.addEventListener('click', function () {
             burgerButton.classList.toggle('active');
             sidebar.classList.toggle('open');
             headerLogoLink.classList.toggle('d-none');
-        }
-
-        burgerButton.addEventListener('click', toggleSidebar);
-
-        document.querySelectorAll('.sidebar-link').forEach((item) => {
-            item.onclick = () => {
-                burgerButton.classList.remove('active');
-                sidebar.classList.remove('open');
-                headerLogoLink.classList.remove('d-none');
-                burgerButton.addEventListener('click', toggleSidebar);
-            }
         });
 
-        // function toggleSidebar() {
-        //     this.classList.toggle('active');
-        //     sidebar.classList.toggle('open');
-        //     headerLogoLink.classList.toggle('d-none');
-        // }
-        //
-        // burgerButton.addEventListener('click', toggleSidebar);
-        //
         // document.querySelectorAll('.sidebar-link').forEach((item) => {
         //     item.onclick = () => {
-        //         sidebar.classList.remove('open');
         //         burgerButton.classList.remove('active');
+        //         sidebar.classList.remove('open');
         //         headerLogoLink.classList.remove('d-none');
         //         burgerButton.addEventListener('click', toggleSidebar);
         //     }
         // });
 
-        // burgerButton.addEventListener('click', function() {
-        //     this.classList.toggle('active');
-        //     sidebar.classList.toggle('open');
-        //     headerLogoLink.classList.toggle('d-none');
-        // });
-        // document.querySelectorAll('.sidebar-link').forEach((item) => {
-        //     item.onclick = () => {
-        //         document.getElementById('sidebar').classList.remove('open');
-        //         burgerButton.classList.remove('active');
-        //         sidebar.classList.remove('open');
-        //         headerLogoLink.classList.remove('d-none');
-        //     }
-        // })
+        // burgerButton.classList.remove('active');
+        // sidebar.classList.remove('open');
+        // headerLogoLink.classList.remove('d-none');
 
-        // burgerButton.addEventListener("click", function () {
-        //     if (sidebar.classList.contains("open")) {
-        //         sidebar.classList.remove('open');
-        //         burgerButton.classList.remove('active');
-        //         sidebar.classList.remove('open');
-        //         headerLogoLink.classList.remove('d-none');
-        //     } else {
-        //             this.classList.add('active');
-        //             sidebar.classList.add('open');
-        //             headerLogoLink.classList.add('d-none');
-        //     }
-        // });
 
 
         mainLink.classList.remove('active');
@@ -87,21 +51,25 @@ export class Sidebar {
 
         if (page === 'main') {
             mainLink.classList.add('active');
+
         }
         if (page === 'income-expenses') {
             incomeExpensesLink.classList.add('active');
+
         }
 
         if (page === 'income') {
             incomeLink.classList.add('active');
             categoriesButton.classList.add("active");
             categoriesItems.classList.remove('d-none');
+
         }
 
         if (page === 'expenses') {
             expensesLink.classList.add('active');
             categoriesButton.classList.add("active");
             categoriesItems.classList.remove('d-none');
+
         }
 
         incomeExpensesLink.addEventListener("click", function (event) {
@@ -132,9 +100,27 @@ export class Sidebar {
             location.href = '#/expenses';
         });
 
+        logoutLink.addEventListener("click", function (event) {
+            event.preventDefault();
+            logoutModal.classList.remove('d-none');
+            document.getElementById('sidebarOverlay').classList.remove('d-none');
+        })
+
+        agreeLogoutButton.addEventListener("click", function () {
+            location.href = '#/logout';
+            logoutModal.classList.add('d-none');
+            document.getElementById('sidebarOverlay').classList.add('d-none');
+        })
+
+        cancelLogoutButton.addEventListener("click", function () {
+            logoutModal.classList.add('d-none');
+            document.getElementById('sidebarOverlay').classList.add('d-none');
+        })
+
     }
 
     static getSidebarInfo() {
+
         const profileElement = document.getElementById('profile');
         const userInfo = Auth.getUserInfo();
         const accessToken = localStorage.getItem(Auth.accessTokenKey);
@@ -148,12 +134,48 @@ export class Sidebar {
 
     }
 
+
     static async getBalance() {
+        const balanceModal = document.getElementById('balance-modal');
+        const balance = document.getElementById('balance');
+        const agreeBalanceButton = document.getElementById('agree-balance-btn')
+        const cancelBalanceButton = document.getElementById('cancel-balance-btn')
+        const newBalance = document.getElementById('new-balance');
+
+
         const result = await CustomHttp.request(config.host + '/balance');
         if (result) {
-            document.getElementById('balance').innerText = result.balance + '$';
+            balance.innerText = result.balance + '$';
         } else {
-            document.getElementById('balance').innerText = 'Данные о балансе недоступны';
+            balance.innerText = 'Данные о балансе недоступны';
         }
+
+        balance.addEventListener('click', function () {
+            balanceModal.classList.remove('d-none');
+            document.getElementById('sidebarOverlay').classList.remove('d-none');
+        });
+
+        cancelBalanceButton.addEventListener('click', function () {
+            balanceModal.classList.add('d-none');
+            document.getElementById('sidebarOverlay').classList.add('d-none');
+        });
+
+        agreeBalanceButton.addEventListener('click', function () {
+            if (newBalance.value) {
+                sendData();
+                balance.innerText = newBalance.value + '$';
+                balanceModal.classList.add('d-none');
+                document.getElementById('sidebarOverlay').classList.add('d-none');
+            }
+        });
+
+        async function sendData() {
+
+            await CustomHttp.request(config.host + '/balance', 'PUT', {
+                newBalance: newBalance.value
+            });
+        }
+
     }
+
 }

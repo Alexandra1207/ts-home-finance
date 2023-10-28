@@ -1,7 +1,16 @@
 <h1 class="mb-5">Создание дохода/расхода</h1>
 <form>
-    <input type="text" class="form-control password mb-3" placeholder="Тип...">
-    <input type="text" class="form-control password mb-3" placeholder="Категория...">
+    <select class="form-select mb-3 custom-select">
+        <option selected>Тип...</option>
+        <option value="1">Расход</option>
+        <option value="2">Доход</option>
+    </select>
+    <select class="form-select mb-3 custom-select">
+        <option selected>Категория...</option>
+        <option value="1">Депозит</option>
+        <option value="2">Зарплата</option>
+    </select>
+
     <input type="text" class="form-control password mb-3" placeholder="Сумма в $...">
     <input type="date" class="form-control password mb-3" placeholder="Дата...">
     <input type="text" class="form-control password mb-3" placeholder="Комментарий...">
