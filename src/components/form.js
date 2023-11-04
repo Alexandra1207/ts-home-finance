@@ -52,11 +52,13 @@ export class Form {
         });
 
         this.processElement = document.getElementById('process');
-
-
         this.processElement.onclick = function () {
             that.processForm();
         }
+
+        // if (this.page === 'signup') {
+        //     that.validateForm();
+        // }
 
     }
 
@@ -66,11 +68,17 @@ export class Form {
             element.style.borderColor = 'red';
             element.parentElement.nextElementSibling.classList.remove('d-none');
             field.valid = false;
-        } else {
+        }
+        // else if (!this.matchPasswords()) {
+        //     element.style.borderColor = 'red';
+        //     element.parentElement.nextElementSibling.classList.remove('d-none');
+        // }
+        else {
             element.removeAttribute('style');
             element.parentElement.nextElementSibling.classList.add('d-none');
             field.valid = true;
         }
+        this.validateForm();
     }
 
     matchPasswords() {

@@ -8,8 +8,6 @@ export class Income {
         this.income = null;
         this.agreeDeleteBtn = document.getElementById('agree-delete-btn');
         this.disagreeDeleteBtn = document.getElementById('disagree-delete-btn');
-        this.deleteButtons = document.querySelectorAll('.delete');
-        this.modifyButtons = document.querySelectorAll('.modify');
         this.createIncomeCategoryButton = document.getElementById('create-income-category-btn');
 
         Sidebar.sidebarButtons('income');
@@ -18,28 +16,6 @@ export class Income {
 
         this.init();
 
-        this.deleteButtons.forEach(function (button) {
-            button.addEventListener('click', function () {
-                document.getElementById('modal').classList.remove('d-none');
-                document.getElementById('myOverlay').classList.remove('d-none');
-            });
-        });
-
-        this.agreeDeleteBtn.addEventListener('click', function () {
-            document.getElementById('modal').classList.add('d-none');
-            document.getElementById('myOverlay').classList.add('d-none');
-        });
-        this.disagreeDeleteBtn.addEventListener('click', function () {
-            document.getElementById('modal').classList.add('d-none');
-            document.getElementById('myOverlay').classList.add('d-none');
-        });
-
-        this.modifyButtons.forEach(function (button) {
-            button.addEventListener('click', function () {
-                location.href = '#/modify-income-category'
-            });
-        });
-
         this.createIncomeCategoryButton.addEventListener('click', function () {
             location.href = '#/create-income-category'
         });
@@ -47,33 +23,93 @@ export class Income {
     }
 
     async init() {
+        const items = document.getElementById('items');
+        items.innerHTML = '';
 
-        // try {
-        const result = await CustomHttp.request(config.host + '/categories/income');
-        console.log(result);
-        this.income = result;
-        //     if (result) {
-        //         if (result.error) {
-        //             throw new Error(result.error);
-        //         }
-        //
-        //         this.quiz = result;
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        try {
+            const result = await CustomHttp.request(config.host + '/categories/income');
+            if (result) {
+                if (result.message) {
+                    throw new Error(result.message);
+                }
+                this.income = result;
+            }
+        } catch (error) {
+            console.log(error);
+        }
 
-        // document.getElementById('person').innerHTML = 'Тест выполнил <span>' + userInfo.fullName + ', ' + userInfo.email + '</span>';
-        // this.showAnswers();
-        //
-        // document.getElementById('return-result').onclick = function () {
-        //     location.href = '#/result?id=' + that.routeParams.id;
-        // }
+        this.income.forEach(function (element) {
+            const that = this;
+
+            const item = document.createElement('div');
+            item.className = 'p-3 border border-secondary rounded-3 item';
+            item.setAttribute('data-id', element.id);
+
+            const title = document.createElement('h2');
+            title.innerText = element.title;
+
+            const modifyButton = document.createElement('button');
+            modifyButton.type = 'button';
+            modifyButton.className = 'btn bg-primary text-white me-2 modify';
+            modifyButton.innerText = 'Редактировать';
+            modifyButton.onclick = function () {
+                location.href = '#/modify-income-category/';
+            }
+
+
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'btn bg-danger text-white delete';
+            deleteButton.innerText = 'Удалить';
+
+            item.appendChild(title);
+            item.appendChild(modifyButton);
+            item.appendChild(deleteButton);
+
+            items.appendChild(item);
+        })
+
+
+        const deleteButtons = document.querySelectorAll('.delete');
+        console.log(deleteButtons);
+        const modifyButtons = document.querySelectorAll('.modify');
+
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                const modalWindow = document.getElementById('modal');
+                const dataID = button.parentNode.getAttribute('data-id');
+
+                modalWindow.setAttribute('data-id', dataID);
+                modalWindow.classList.remove('d-none');
+
+                document.getElementById('myOverlay').classList.remove('d-none');
+            });
+        });
+
+        const that = this;
+        this.agreeDeleteBtn.addEventListener('click', function () {
+            const dataId = this.parentNode.parentNode.getAttribute('data-id');
+            console.log(dataId);
+            that.deleteCategory(dataId);
+            document.getElementById('modal').classList.add('d-none');
+            document.getElementById('myOverlay').classList.add('d-none');
+            document.querySelector('[data-id="' + dataId + '"]').remove();
+        });
+        this.disagreeDeleteBtn.addEventListener('click', function () {
+            document.getElementById('modal').classList.add('d-none');
+            document.getElementById('myOverlay').classList.add('d-none');
+        });
+
+        modifyButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                location.href = '#/modify-income-category';
+            });
+        });
+
     }
 
-    showIncome() {
-
+    async deleteCategory(id) {
+        return await CustomHttp.request(config.host + '/categories/income/' + id, 'DELETE');
     }
-
 
 }

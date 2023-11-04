@@ -13,29 +13,29 @@ export class Expenses {
         Sidebar.getSidebarInfo();
         Sidebar.getBalance();
 
-        const burgerButton = document.querySelector('.burger-btn');
-        const sidebar = document.querySelector('.sidebar');
-        const headerLogoLink = document.querySelector('.header-logo-link');
+        // const burgerButton = document.querySelector('.burger-btn');
+        // const sidebar = document.querySelector('.sidebar');
+        // const headerLogoLink = document.querySelector('.header-logo-link');
 
-        function toggleSidebar() {
-            if (burgerButton.classList.contains('active')) {
-                burgerButton.classList.remove('active');
-                sidebar.classList.remove('open');
-                headerLogoLink.classList.remove('d-none');
-            } else {
-                burgerButton.classList.add('active');
-                sidebar.classList.add('open');
-                headerLogoLink.classList.add('d-none');
-            }
-
-        }
-
-        burgerButton.addEventListener('click', toggleSidebar);
+        // function toggleSidebar() {
+        //     if (burgerButton.classList.contains('active')) {
+        //         burgerButton.classList.remove('active');
+        //         sidebar.classList.remove('open');
+        //         headerLogoLink.classList.remove('d-none');
+        //     } else {
+        //         burgerButton.classList.add('active');
+        //         sidebar.classList.add('open');
+        //         headerLogoLink.classList.add('d-none');
+        //     }
+        //
+        // }
+        //
+        // burgerButton.addEventListener('click', toggleSidebar);
 
 
         this.modifyButtons.forEach(function(button) {
             button.addEventListener('click', function() {
-                location.href = '#/modify-expenses-category'
+                location.href = '#/modify-expenses-category';
             });
         });
 
@@ -57,7 +57,7 @@ export class Expenses {
         });
 
         this.createIncomeCategoryButton.addEventListener('click', function() {
-            location.href = '#/create-expenses-category'
+            location.href = '#/create-expenses-category';
         });
 
     }
