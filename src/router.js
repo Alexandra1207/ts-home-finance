@@ -10,6 +10,7 @@ import {CreateExpensesCategory} from "./components/create-expenses-category.js";
 import {CreateExpensesIncome} from "./components/create-expenses-income.js";
 import {IncomeExpenses} from "./components/income-expenses.js";
 import {ModifyExpensesIncome} from "./components/modify-expenses-income.js";
+import {Sidebar} from "./components/sidebar.js";
 
 export class Router {
     constructor() {
@@ -153,17 +154,30 @@ export class Router {
             return item.route === window.location.hash;
         });
 
-        if (newRoute.sidebar === false) {
+        if (newRoute.sidebar !== false) {
+            this.sidebarElement.classList.remove('d-none');
+            this.sidebarElement.innerHTML = await fetch('templates/sidebar.html').then(response => response.text());
+            Sidebar.getSidebarInfo();
+            Sidebar.getBalance();
+        } else {
+            this.sidebarElement.innerHTML = '';
             this.sidebarElement.classList.add('d-none');
             this.header.classList.add('d-none');
             this.contentElement.classList.remove('w-auto');
-            this.contentElement.classList.remove('p-5');
-        } else {
-            this.sidebarElement.classList.remove('d-none');
-            this.header.classList.remove('d-none');
-            this.contentElement.classList.add('w-auto');
-            this.contentElement.classList.add('p-5');
+            this.contentElement.classList.remove('p-5')
         }
+
+        // if (newRoute.sidebar === false) {
+        //     this.sidebarElement.classList.add('d-none');
+        //     this.header.classList.add('d-none');
+        //     this.contentElement.classList.remove('w-auto');
+        //     this.contentElement.classList.remove('p-5');
+        // } else {
+        //     this.sidebarElement.classList.remove('d-none');
+        //     this.header.classList.remove('d-none');
+        //     this.contentElement.classList.add('w-auto');
+        //     this.contentElement.classList.add('p-5');
+        // }
 
 
         if (!newRoute) {

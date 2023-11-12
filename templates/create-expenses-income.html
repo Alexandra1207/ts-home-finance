@@ -1,21 +1,65 @@
 <h1 class="mb-5">Создание дохода/расхода</h1>
 <form>
-    <select class="form-select mb-3 custom-select">
-        <option selected>Тип...</option>
+    <select class="form-select mb-3 custom-select" id="select-type">
+        <option>Тип...</option>
         <option value="1">Расход</option>
         <option value="2">Доход</option>
     </select>
-    <select class="form-select mb-3 custom-select">
-        <option selected>Категория...</option>
+    <select class="form-select mb-3 custom-select" id="select-category">
+        <option>Категория...</option>
         <option value="1">Депозит</option>
         <option value="2">Зарплата</option>
     </select>
 
-    <input type="text" class="form-control password mb-3" placeholder="Сумма в $...">
-    <input type="date" class="form-control password mb-3" placeholder="Дата...">
-    <input type="text" class="form-control password mb-3" placeholder="Комментарий...">
+    <input type="text" class="form-control password mb-3 item-input" placeholder="Сумма в $..." id="sum">
+    <input type="date" class="form-control password mb-3 item-input" placeholder="Дата..." id="date">
+    <input type="text" class="form-control password mb-3 item-input" placeholder="Комментарий..." id="comment">
 </form>
 <div>
     <button type="button" class="btn bg-success text-white me-2" id="create-btn">Создать</button>
     <button type="button" class="btn bg-danger text-white" id="cancel-btn">Отмена</button>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

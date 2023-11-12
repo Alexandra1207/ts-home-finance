@@ -6,8 +6,6 @@ export class ModifyExpensesCategory {
         this.cancelButton = document.getElementById('cancel');
 
         Sidebar.sidebarButtons('expenses');
-        Sidebar.getSidebarInfo();
-        Sidebar.getBalance();
 
         this.saveButton.addEventListener('click', function() {
             location.href = '#/expenses'

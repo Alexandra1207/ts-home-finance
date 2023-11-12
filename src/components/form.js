@@ -56,10 +56,6 @@ export class Form {
             that.processForm();
         }
 
-        // if (this.page === 'signup') {
-        //     that.validateForm();
-        // }
-
     }
 
     validateField(field, element) {
@@ -69,10 +65,7 @@ export class Form {
             element.parentElement.nextElementSibling.classList.remove('d-none');
             field.valid = false;
         }
-        // else if (!this.matchPasswords()) {
-        //     element.style.borderColor = 'red';
-        //     element.parentElement.nextElementSibling.classList.remove('d-none');
-        // }
+
         else {
             element.removeAttribute('style');
             element.parentElement.nextElementSibling.classList.add('d-none');

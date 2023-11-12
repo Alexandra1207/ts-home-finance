@@ -197,8 +197,12 @@ a.nav-link:hover svg {
 }
 
 .label-date {
-    cursor: pointer;
     z-index: -1;
+}
+
+.label-date:hover {
+    cursor: pointer;
+
 }
 
 .items {
@@ -227,7 +231,7 @@ a.nav-link:hover svg {
 @media (max-width: 1250px) {
 
     .header {
-        display: flex;
+        display: flex !important;
     }
 
     .sidebar {

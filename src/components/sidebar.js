@@ -27,21 +27,6 @@ export class Sidebar {
             headerLogoLink.classList.toggle('d-none');
         });
 
-        // document.querySelectorAll('.sidebar-link').forEach((item) => {
-        //     item.onclick = () => {
-        //         burgerButton.classList.remove('active');
-        //         sidebar.classList.remove('open');
-        //         headerLogoLink.classList.remove('d-none');
-        //         burgerButton.addEventListener('click', toggleSidebar);
-        //     }
-        // });
-
-        // burgerButton.classList.remove('active');
-        // sidebar.classList.remove('open');
-        // headerLogoLink.classList.remove('d-none');
-
-
-
         mainLink.classList.remove('active');
         incomeExpensesLink.classList.remove('active');
         categoriesButton.classList.remove('active');
@@ -69,7 +54,6 @@ export class Sidebar {
             expensesLink.classList.add('active');
             categoriesButton.classList.add("active");
             categoriesItems.classList.remove('d-none');
-
         }
 
         incomeExpensesLink.addEventListener("click", function (event) {

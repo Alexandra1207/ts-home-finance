@@ -1,6 +1,7 @@
 import {Sidebar} from "./sidebar";
 import config from "../../config/config.js";
 import {CustomHttp} from "../services/custom-http";
+import data from "bootstrap/js/src/dom/data";
 
 
 export class Income {
@@ -11,8 +12,6 @@ export class Income {
         this.createIncomeCategoryButton = document.getElementById('create-income-category-btn');
 
         Sidebar.sidebarButtons('income');
-        Sidebar.getSidebarInfo();
-        Sidebar.getBalance();
 
         this.init();
 
@@ -23,8 +22,12 @@ export class Income {
     }
 
     async init() {
+
         const items = document.getElementById('items');
-        items.innerHTML = '';
+        const arrayItems = Array.from(items.querySelectorAll(".item"));
+        arrayItems.slice(0, arrayItems.length - 1).forEach(function (item) {
+            item.remove();
+        });
 
         try {
             const result = await CustomHttp.request(config.host + '/categories/income');
@@ -71,7 +74,7 @@ export class Income {
 
 
         const deleteButtons = document.querySelectorAll('.delete');
-        console.log(deleteButtons);
+
         const modifyButtons = document.querySelectorAll('.modify');
 
         deleteButtons.forEach(function (button) {
@@ -94,15 +97,19 @@ export class Income {
             document.getElementById('modal').classList.add('d-none');
             document.getElementById('myOverlay').classList.add('d-none');
             document.querySelector('[data-id="' + dataId + '"]').remove();
+
         });
         this.disagreeDeleteBtn.addEventListener('click', function () {
             document.getElementById('modal').classList.add('d-none');
             document.getElementById('myOverlay').classList.add('d-none');
+
         });
 
         modifyButtons.forEach(function (button) {
             button.addEventListener('click', function () {
-                location.href = '#/modify-income-category';
+                const id = this.parentNode.getAttribute('data-id');
+                console.log(id);
+                location.href = '#/modify-income-category?id=' + id;
             });
         });
 
@@ -112,4 +119,6 @@ export class Income {
         return await CustomHttp.request(config.host + '/categories/income/' + id, 'DELETE');
     }
 
+
 }
+

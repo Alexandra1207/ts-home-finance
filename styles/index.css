@@ -1,6 +1,7 @@
 .content-page {
     justify-content: space-around;
     align-items: end;
+    max-width: 60vw;
 }
 
 .pie-block {

@@ -10,30 +10,32 @@
 
         <div class="d-inline-block">
             <div class="d-inline-block me-3">c</div>
-            <label class="border-bottom border-secondary text-secondary position-relative me-3 label-date" for="date-from" id="label-date-from">
-                Дата
-                <input type="date" id="date-from" class="d-none position-absolute input-date">
-            </label>
+<!--            <label class="border-bottom border-secondary text-secondary position-relative me-3 label-date"-->
+<!--                   for="date-from" id="label-date-from">-->
+<!--                Дата-->
+                <input type="date" id="date-from" class="input-date">
+<!--            </label>-->
             <div class="d-inline-block me-3">по</div>
-            <label class="border-bottom border-secondary text-secondary position-relative label-date" for="date-to" id="label-date-to">
-                Дата
-                <input type="date" id="date-to" class="d-none position-absolute input-date">
-            </label>
+<!--            <label class="border-bottom border-secondary text-secondary position-relative label-date" for="date-to"-->
+<!--                   id="label-date-to">-->
+<!--                Дата-->
+                <input type="date" id="date-to" class="input-date">
+<!--            </label>-->
         </div>
     </div>
 
     <div class="content-page d-flex">
         <div class="pie-block text-center">
             <h2 class="mb-3">Доходы</h2>
-            <div class="pie" id="expense-container">
-<!--                <canvas id="pieChartExpense"></canvas>-->
+            <div class="pie" id="income-container">
+                <canvas id="pieChartExpense"></canvas>
             </div>
         </div>
         <div class="line"></div>
         <div class="pie-block text-center">
             <h2 class="mb-3">Расходы</h2>
-            <div class="pie" id="income-container">
-<!--                <canvas id="pieChartIncome"></canvas>-->
+            <div class="pie" id="expense-container">
+                <canvas id="pieChartIncome"></canvas>
             </div>
 
         </div>

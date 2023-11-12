@@ -6,8 +6,6 @@ export class ModifyExpensesIncome {
         this.cancelButton = document.getElementById('cancel-btn');
 
         Sidebar.sidebarButtons('income-expenses');
-        Sidebar.getSidebarInfo();
-        Sidebar.getBalance();
 
         this.createButton.addEventListener('click', function() {
             location.href = '#/income-expenses'
