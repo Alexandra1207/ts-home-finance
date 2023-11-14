@@ -193,7 +193,14 @@ a.nav-link:hover svg {
 }
 
 .input-date {
+    width: 75px;
     left: 0;
+    border: 0;
+    border-bottom: 1px solid #6C757D;
+}
+
+.input-date::placeholder {
+    text-decoration: underline;
 }
 
 .label-date {

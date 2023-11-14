@@ -1,20 +1,15 @@
 import {Sidebar} from "./sidebar.js";
 import {CustomHttp} from "../services/custom-http";
 import config from "../../config/config";
-import {Functions} from "./functions";
+import {Functions} from "./functions.js";
 
 export class IncomeExpenses {
     constructor() {
         this.incomeExpense = null;
         this.createIncomeButton = document.getElementById('create-income');
         this.createIncomeExpense = document.getElementById('create-expense');
-        // this.modifyButtons = document.querySelectorAll('.modify-btn');
-        // this.trashButtons = document.querySelectorAll('.trash-btn');
         this.agreeDeleteBtn = document.getElementById('agree-delete-btn');
         this.disagreeDeleteBtn = document.getElementById('disagree-delete-btn');
-
-        const that = this;
-
 
         Sidebar.sidebarButtons('income-expenses');
 
@@ -25,18 +20,7 @@ export class IncomeExpenses {
             location.href = '#/create-expenses-income';
         });
 
-        // this.modifyButtons.forEach(function (button) {
-        //     button.addEventListener('click', function () {
-        //         console.log(1);
-        //         location.href = '#/modify-expenses-income';
-        //     });
-        // });
-        // this.trashButtons.forEach(function (button) {
-        //     button.addEventListener('click', function () {
-        //         document.getElementById('modal').classList.remove('d-none');
-        //         document.getElementById('myOverlay').classList.remove('d-none');
-        //     });
-        // });
+
         this.agreeDeleteBtn.addEventListener('click', function () {
             const dataId = this.parentNode.parentNode.getAttribute('data-id');
             console.log(dataId);
@@ -55,12 +39,109 @@ export class IncomeExpenses {
     }
 
     async init() {
+        const buttons = document.querySelectorAll('.btn');
+        const that = this;
+
+        const allBtn = document.getElementById('all-btn');
+        const todayBtn = document.getElementById('today-btn');
+        const weekBtn = document.getElementById('week-btn');
+        const monthBtn = document.getElementById('month-btn');
+        const yearBtn = document.getElementById('year-btn');
+        const intervalBtn = document.getElementById('interval-btn');
+
+        this.showOperations();
+
+        Functions.inputDates();
+
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+
+
+                buttons.forEach(function (btn) {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+
+
+                if (button === allBtn) {
+                    that.showOperations();
+                }
+
+                if (button === todayBtn) {
+                    that.showOperations('/operations?period=today');
+                }
+
+                if (button === weekBtn) {
+                    that.showOperations('/operations?period=week');
+                }
+
+                if (button === monthBtn) {
+                    that.showOperations('/operations?period=month');
+                }
+
+                if (button === yearBtn) {
+                    that.showOperations('/operations?period=year');
+                }
+
+                const inputDateFrom = document.getElementById('input-date-from');
+                const inputDateTo = document.getElementById('input-date-to');
+                const labelDateFrom = document.getElementById('label-date-from');
+                const labelDateTo = document.getElementById('label-date-to');
+
+                labelDateFrom.classList.remove('text-danger');
+                labelDateFrom.classList.remove('border-danger');
+                labelDateTo.classList.remove('text-danger');
+                labelDateTo.classList.remove('border-danger');
+
+
+                if (button !== intervalBtn) {
+                    if (inputDateTo || inputDateFrom) {
+                        labelDateFrom.classList.remove('d-none');
+                        labelDateTo.classList.remove('d-none');
+                        inputDateTo.classList.add('d-none');
+                        inputDateFrom.classList.add('d-none');
+                    }
+                }
+
+                if (button === intervalBtn) {
+                    if (!inputDateFrom && !inputDateTo) {
+                        labelDateFrom.classList.add('text-danger');
+                        labelDateFrom.classList.add('border-danger');
+                        labelDateTo.classList.add('text-danger');
+                        labelDateTo.classList.add('border-danger');
+                    } else if (!inputDateFrom && !inputDateTo.value) {
+                        labelDateFrom.classList.add('text-danger');
+                        labelDateFrom.classList.add('border-danger');
+                        inputDateTo.classList.add('is-invalid');;
+                    } else if (!inputDateTo && !inputDateFrom.value) {
+                        labelDateTo.classList.add('text-danger');
+                        labelDateTo.classList.add('border-danger');
+                        inputDateFrom.classList.add('is-invalid');
+                    } else if (!inputDateFrom.value && !inputDateTo.value) {
+                        inputDateFrom.classList.add('is-invalid');;
+                        inputDateTo.classList.add('is-invalid');
+                    } else {
+                        that.showOperations('/operations?period=interval&dateFrom=' + inputDateFrom.value + '&dateTo=' + inputDateTo.value);
+                        inputDateFrom.classList.remove('is-invalid');;
+                        inputDateTo.classList.remove('is-invalid');
+                    }
+                }
+
+
+            });
+        });
+
+
+    }
+
+    async showOperations(period = '/operations?period=all') {
+
         const that = this;
         const tableBody = document.getElementById('table-body');
         tableBody.innerHTML = '';
 
         try {
-            const result = await CustomHttp.request(config.host + '/operations?period=all');
+            const result = await CustomHttp.request(config.host + period);
             if (result) {
                 if (result.message) {
                     throw new Error(result.message);
@@ -92,7 +173,6 @@ export class IncomeExpenses {
             }
 
             const category = document.createElement('td');
-            // category.innerHTML = operation.category;
             category.innerHTML = operation.category.toLowerCase();
 
             const amount = document.createElement('td');
@@ -154,7 +234,6 @@ export class IncomeExpenses {
 
         })
 
-
         function formattedDate(date) {
             const parts = date.split("-");
             const year = parts[0];
@@ -162,6 +241,7 @@ export class IncomeExpenses {
             const day = parts[2];
             return day + "." + month + "." + year;
         }
+
     }
 
 }

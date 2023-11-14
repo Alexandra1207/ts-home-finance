@@ -2,6 +2,7 @@ import {Sidebar} from "./sidebar";
 import config from "../../config/config.js";
 import {CustomHttp} from "../services/custom-http";
 import data from "bootstrap/js/src/dom/data";
+import {Functions} from "./functions";
 
 
 export class Income {
@@ -93,7 +94,7 @@ export class Income {
         this.agreeDeleteBtn.addEventListener('click', function () {
             const dataId = this.parentNode.parentNode.getAttribute('data-id');
             console.log(dataId);
-            that.deleteCategory(dataId);
+            Functions.deleteCategory(dataId);
             document.getElementById('modal').classList.add('d-none');
             document.getElementById('myOverlay').classList.add('d-none');
             document.querySelector('[data-id="' + dataId + '"]').remove();
@@ -114,11 +115,6 @@ export class Income {
         });
 
     }
-
-    async deleteCategory(id) {
-        return await CustomHttp.request(config.host + '/categories/income/' + id, 'DELETE');
-    }
-
 
 }
 

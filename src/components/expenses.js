@@ -104,21 +104,5 @@ export class Expenses {
         });
     }
 
-    // async deleteCategory(id) {
-    //     return await CustomHttp.request(config.host + '/categories/expense/' + id, 'DELETE');
-    // }
-
-    // async deleteUndefinedOperations() {
-    //     const that = this;
-    //     const result = await CustomHttp.request(config.host + '/operations?period=all');
-    //     const undefinedOperations = result.filter(obj => !("category" in obj));
-    //     undefinedOperations.forEach(function (item) {
-    //         that.deleteOperation(item.id);
-    //     })
-    // }
-    // async deleteOperation(id) {
-    //     return await CustomHttp.request(config.host + '/operations/' + id, 'DELETE');
-    // }
-
 }
 
