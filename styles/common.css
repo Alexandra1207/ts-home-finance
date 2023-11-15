@@ -242,7 +242,9 @@ a.nav-link:hover svg {
     }
 
     .sidebar {
-        position: absolute;
+        position: fixed;
+        top: 0;
+        bottom: 0;
         transform: translateX(-100%);
         transition: all 0.5s;
     }

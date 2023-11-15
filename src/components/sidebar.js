@@ -58,10 +58,16 @@ export class Sidebar {
 
         incomeExpensesLink.addEventListener("click", function (event) {
             event.preventDefault();
+            sidebar.classList.remove('open');
+            burgerButton.classList.remove('active');
+            headerLogoLink.classList.remove('d-none');
             location.href = '#/income-expenses';
         });
         mainLink.addEventListener("click", function (event) {
             event.preventDefault();
+            sidebar.classList.remove('open');
+            burgerButton.classList.remove('active');
+            headerLogoLink.classList.remove('d-none');
             location.href = '#/';
         });
 
@@ -77,10 +83,16 @@ export class Sidebar {
 
         incomeLink.addEventListener("click", function (event) {
             event.preventDefault();
+            sidebar.classList.remove('open');
+            burgerButton.classList.remove('active');
+            headerLogoLink.classList.remove('d-none');
             location.href = '#/income';
         });
         expensesLink.addEventListener("click", function (event) {
             event.preventDefault();
+            sidebar.classList.remove('open');
+            burgerButton.classList.remove('active');
+            headerLogoLink.classList.remove('d-none');
             location.href = '#/expenses';
         });
 
@@ -159,7 +171,5 @@ export class Sidebar {
                 newBalance: newBalance.value
             });
         }
-
     }
-
 }
