@@ -1,8 +1,7 @@
 import {Sidebar} from "./sidebar";
 import config from "../../config/config.js";
-import {CustomHttp} from "../services/custom-http";
-import data from "bootstrap/js/src/dom/data";
-import {Functions} from "./functions";
+import {CustomHttp} from "../services/custom-http.js";
+import {Functions} from "./functions.js";
 
 
 export class Income {
@@ -43,7 +42,6 @@ export class Income {
         }
 
         this.income.forEach(function (element) {
-            const that = this;
 
             const item = document.createElement('div');
             item.className = 'p-3 border border-secondary rounded-3 item';
@@ -56,9 +54,6 @@ export class Income {
             modifyButton.type = 'button';
             modifyButton.className = 'btn bg-primary text-white me-2 modify';
             modifyButton.innerText = 'Редактировать';
-            modifyButton.onclick = function () {
-                location.href = '#/modify-income-category/';
-            }
 
 
             const deleteButton = document.createElement('button');
@@ -73,10 +68,8 @@ export class Income {
             items.appendChild(item);
         })
 
-
         const deleteButtons = document.querySelectorAll('.delete');
 
-        const modifyButtons = document.querySelectorAll('.modify');
 
         deleteButtons.forEach(function (button) {
             button.addEventListener('click', function () {
@@ -90,7 +83,7 @@ export class Income {
             });
         });
 
-        const that = this;
+
         this.agreeDeleteBtn.addEventListener('click', function () {
             const dataId = this.parentNode.parentNode.getAttribute('data-id');
             console.log(dataId);
@@ -106,15 +99,14 @@ export class Income {
 
         });
 
+        const modifyButtons = document.querySelectorAll('.modify');
         modifyButtons.forEach(function (button) {
             button.addEventListener('click', function () {
                 const id = this.parentNode.getAttribute('data-id');
-                console.log(id);
                 location.href = '#/modify-income-category?id=' + id;
             });
         });
 
     }
-
 }
 

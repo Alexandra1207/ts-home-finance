@@ -151,8 +151,9 @@ export class Router {
         }
 
         const newRoute = this.routes.find(item => {
-            return item.route === window.location.hash;
+            return item.route === urlRoute;
         });
+
 
         if (newRoute.sidebar !== false) {
             this.sidebarElement.classList.remove('d-none');
@@ -166,19 +167,6 @@ export class Router {
             this.contentElement.classList.remove('w-auto');
             this.contentElement.classList.remove('p-5')
         }
-
-        // if (newRoute.sidebar === false) {
-        //     this.sidebarElement.classList.add('d-none');
-        //     this.header.classList.add('d-none');
-        //     this.contentElement.classList.remove('w-auto');
-        //     this.contentElement.classList.remove('p-5');
-        // } else {
-        //     this.sidebarElement.classList.remove('d-none');
-        //     this.header.classList.remove('d-none');
-        //     this.contentElement.classList.add('w-auto');
-        //     this.contentElement.classList.add('p-5');
-        // }
-
 
         if (!newRoute) {
             window.location.href = '#/login';

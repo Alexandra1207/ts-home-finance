@@ -46,4 +46,5 @@ export class Functions {
             dateToBlock.appendChild(inputDateTo);
         })
     }
+
 }

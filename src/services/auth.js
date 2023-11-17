@@ -8,10 +8,10 @@ export class Auth {
 
     static async processUnauthorizedResponse() {
         const refreshToken = localStorage.getItem(this.refreshTokenKey);
-        console.log(refreshToken);
+
 
         const rememberMe = JSON.parse(localStorage.getItem("userInfo")).rememberMe;
-        console.log(rememberMe);
+
 
         if (refreshToken) {
             const response = await fetch(config.host + '/refresh', {
@@ -22,7 +22,7 @@ export class Auth {
                 },
                 body: JSON.stringify({
                     refreshToken: refreshToken,
-                    // rememberMe: rememberMe
+                    rememberMe: rememberMe
                 })
             });
 

@@ -1,6 +1,6 @@
 import {Sidebar} from "./sidebar.js";
-import {CustomHttp} from "../services/custom-http";
-import config from "../../config/config";
+import {CustomHttp} from "../services/custom-http.js";
+import config from "../../config/config.js";
 import {Functions} from "./functions.js";
 
 export class IncomeExpenses {
@@ -23,7 +23,6 @@ export class IncomeExpenses {
 
         this.agreeDeleteBtn.addEventListener('click', function () {
             const dataId = this.parentNode.parentNode.getAttribute('data-id');
-            console.log(dataId);
             Functions.deleteOperation(dataId);
             document.getElementById('modal').classList.add('d-none');
             document.getElementById('myOverlay').classList.add('d-none');
@@ -88,7 +87,9 @@ export class IncomeExpenses {
                 const labelDateFrom = document.getElementById('label-date-from');
                 const labelDateTo = document.getElementById('label-date-to');
 
-                labelDateFrom.classList.remove('text-danger');
+                if (labelDateFrom.classList.contains('text-danger')) {
+                    labelDateFrom.classList.remove('text-danger');
+                }
                 labelDateFrom.classList.remove('border-danger');
                 labelDateTo.classList.remove('text-danger');
                 labelDateTo.classList.remove('border-danger');
@@ -112,17 +113,20 @@ export class IncomeExpenses {
                     } else if (!inputDateFrom && !inputDateTo.value) {
                         labelDateFrom.classList.add('text-danger');
                         labelDateFrom.classList.add('border-danger');
-                        inputDateTo.classList.add('is-invalid');;
+                        inputDateTo.classList.add('is-invalid');
+                        ;
                     } else if (!inputDateTo && !inputDateFrom.value) {
                         labelDateTo.classList.add('text-danger');
                         labelDateTo.classList.add('border-danger');
                         inputDateFrom.classList.add('is-invalid');
                     } else if (!inputDateFrom.value && !inputDateTo.value) {
-                        inputDateFrom.classList.add('is-invalid');;
+                        inputDateFrom.classList.add('is-invalid');
+                        ;
                         inputDateTo.classList.add('is-invalid');
                     } else {
                         that.showOperations('/operations?period=interval&dateFrom=' + inputDateFrom.value + '&dateTo=' + inputDateTo.value);
-                        inputDateFrom.classList.remove('is-invalid');;
+                        inputDateFrom.classList.remove('is-invalid');
+                        ;
                         inputDateTo.classList.remove('is-invalid');
                     }
                 }
@@ -136,7 +140,6 @@ export class IncomeExpenses {
 
     async showOperations(period = '/operations?period=all') {
 
-        const that = this;
         const tableBody = document.getElementById('table-body');
         tableBody.innerHTML = '';
 
@@ -154,7 +157,6 @@ export class IncomeExpenses {
 
 
         this.incomeExpense.forEach(function (operation, index) {
-            // const that = this;
             const row = document.createElement('tr');
             row.setAttribute('data-id', operation.id);
 

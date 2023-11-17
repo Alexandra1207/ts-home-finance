@@ -26,28 +26,28 @@ export class CreateExpensesIncome {
             let hasEmptyField = false;
 
             selectElements.forEach(select => {
-                    const selectedOption = select.options[select.selectedIndex];
-                    if (selectedOption.hasAttribute('value')) {
-                        select.classList.remove('is-invalid');
+                const selectedOption = select.options[select.selectedIndex];
+                if (selectedOption.hasAttribute('value')) {
+                    select.classList.remove('is-invalid');
 
-                    } else {
-                        select.classList.add('is-invalid');
-                        hasEmptyField = true;
-                    }
+                } else {
+                    select.classList.add('is-invalid');
+                    hasEmptyField = true;
+                }
             });
 
             console.log(inputElements);
             inputElements.forEach(item => {
                 console.log(item.value)
 
-                    if (!item.value) {
-                        item.classList.add('is-invalid');
-                        hasEmptyField = true;
-                        console.log(hasEmptyField);
-                    } else {
-                        item.classList.remove('is-invalid');
+                if (!item.value) {
+                    item.classList.add('is-invalid');
+                    hasEmptyField = true;
+                    console.log(hasEmptyField);
+                } else {
+                    item.classList.remove('is-invalid');
 
-                    }
+                }
 
             });
 
@@ -66,7 +66,6 @@ export class CreateExpensesIncome {
 
     init() {
 
-        // const selectTypeElement = document.getElementById('select-type');
         const that = this;
 
         this.selectTypeElement.addEventListener('change', function () {
@@ -85,15 +84,9 @@ export class CreateExpensesIncome {
 
         });
 
-
-        // this.createButton.addEventListener('click', function () {
-        //     // const
-        //     // location.href = '#/income-expenses'
-        // });
     }
 
     async typeRequest(type) {
-        // const selectCategoryElement = document.getElementById('select-category');
 
         const result = await CustomHttp.request(config.host + type);
         result.forEach(item => {
@@ -109,31 +102,20 @@ export class CreateExpensesIncome {
         const that = this;
         const selectedOption = that.selectTypeElement.options[that.selectTypeElement.selectedIndex];
         const selectedText = selectedOption.textContent;
-        // console.log(that.selectCategoryElement.value);
+
         let type;
         if (selectedText === 'Расход') {
             type = 'expense';
         } else if (selectedText === 'Доход') {
             type = 'income';
         }
-        console.log({
-            "type": type,
-            "amount": +that.sum.value,
-            "date": that.date.value,
-            "comment": that.comment.value,
-            "category_id": +that.selectCategoryElement.value
-        })
+
         return await CustomHttp.request(config.host + '/operations', 'POST', {
             "type": type,
             "amount": +that.sum.value,
             "date": that.date.value,
             "comment": that.comment.value,
             "category_id": +that.selectCategoryElement.value
-            // "type": "income",
-            // "amount": 250,
-            // "date": "2022-01-01",
-            // "comment": "new comment",
-            // "category_id": 2
         });
     }
 }

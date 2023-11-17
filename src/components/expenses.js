@@ -98,8 +98,7 @@ export class Expenses {
         modifyButtons.forEach(function (button) {
             button.addEventListener('click', function () {
                 const id = this.parentNode.getAttribute('data-id');
-                console.log(id);
-                location.href = '#/modify-income-category?id=' + id;
+                location.href = '#/modify-expenses-category?id=' + id;
             });
         });
     }
