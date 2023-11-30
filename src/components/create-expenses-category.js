@@ -7,7 +7,10 @@ export class CreateExpensesCategory {
         this.cancelButton = document.getElementById('cancel-btn');
 
         Sidebar.sidebarButtons('expenses');
+        this.init();
+    }
 
+    init() {
         this.createButton.addEventListener('click', function () {
             const categoryName = document.getElementById('category-name');
             if (categoryName.value) {
@@ -21,7 +24,7 @@ export class CreateExpensesCategory {
         this.cancelButton.addEventListener('click', function () {
             location.href = '#/expenses'
         });
-
     }
+
 
 }

@@ -13,53 +13,7 @@ export class CreateExpensesIncome {
         this.date = document.getElementById('date');
         this.comment = document.getElementById('comment');
 
-        const that = this;
-
-
         Sidebar.sidebarButtons('income-expenses');
-
-
-        this.createButton.addEventListener('click', function () {
-
-            const inputElements = document.querySelectorAll('.item-input');
-            const selectElements = document.querySelectorAll('select');
-            let hasEmptyField = false;
-
-            selectElements.forEach(select => {
-                const selectedOption = select.options[select.selectedIndex];
-                if (selectedOption.hasAttribute('value')) {
-                    select.classList.remove('is-invalid');
-
-                } else {
-                    select.classList.add('is-invalid');
-                    hasEmptyField = true;
-                }
-            });
-
-            console.log(inputElements);
-            inputElements.forEach(item => {
-                console.log(item.value)
-
-                if (!item.value) {
-                    item.classList.add('is-invalid');
-                    hasEmptyField = true;
-                    console.log(hasEmptyField);
-                } else {
-                    item.classList.remove('is-invalid');
-
-                }
-
-            });
-
-            if (!hasEmptyField) {
-                that.createOperation();
-                location.href = '#/income-expenses';
-            }
-
-        });
-        this.cancelButton.addEventListener('click', function () {
-            location.href = '#/income-expenses';
-        });
 
         this.init();
     }
@@ -70,24 +24,57 @@ export class CreateExpensesIncome {
 
         this.selectTypeElement.addEventListener('change', function () {
             const selectedOption = that.selectTypeElement.options[that.selectTypeElement.selectedIndex];
-            const selectedText = selectedOption.textContent;
+            const typeOperation = selectedOption.textContent === 'Доход' ? '/categories/income' : '/categories/expense';
             const selectCategoryElement = document.getElementById('select-category');
 
             while (selectCategoryElement.options.length > 1) {
                 selectCategoryElement.remove(1);
             }
-            if (selectedText === 'Доход') {
-                that.typeRequest('/categories/income');
-            } else if (selectedText === "Расход") {
-                that.typeRequest('/categories/expense');
-            }
+            that.typeRequest(typeOperation);
+        });
 
+        this.createButton.addEventListener('click', function () {
+            if (that.validateInputs()) {
+                that.createOperation();
+                location.href = '#/income-expenses';
+            }
+        });
+
+        this.cancelButton.addEventListener('click', function () {
+            location.href = '#/income-expenses';
         });
 
     }
 
-    async typeRequest(type) {
 
+    validateInputs() {
+        const inputElements = document.querySelectorAll('.item-input');
+        const selectElements = document.querySelectorAll('select');
+        let hasEmptyField = false;
+
+        selectElements.forEach(select => {
+            const selectedOption = select.options[select.selectedIndex];
+            if (selectedOption.hasAttribute('value')) {
+                select.classList.remove('is-invalid');
+            } else {
+                select.classList.add('is-invalid');
+                hasEmptyField = true;
+            }
+        });
+
+        inputElements.forEach(item => {
+            if (!item.value) {
+                item.classList.add('is-invalid');
+                hasEmptyField = true;
+            } else {
+                item.classList.remove('is-invalid');
+            }
+        });
+
+        return !hasEmptyField;
+    }
+
+    async typeRequest(type) {
         const result = await CustomHttp.request(config.host + type);
         result.forEach(item => {
             const optionElement = document.createElement('option');
@@ -95,20 +82,12 @@ export class CreateExpensesIncome {
             optionElement.text = item.title;
             this.selectCategoryElement.appendChild(optionElement);
         });
-        console.log(result);
     }
 
     async createOperation() {
         const that = this;
         const selectedOption = that.selectTypeElement.options[that.selectTypeElement.selectedIndex];
-        const selectedText = selectedOption.textContent;
-
-        let type;
-        if (selectedText === 'Расход') {
-            type = 'expense';
-        } else if (selectedText === 'Доход') {
-            type = 'income';
-        }
+        const type = selectedOption.textContent === 'Доход' ? 'income' : 'expense';
 
         return await CustomHttp.request(config.host + '/operations', 'POST', {
             "type": type,

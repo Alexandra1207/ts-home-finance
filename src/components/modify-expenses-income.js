@@ -57,8 +57,6 @@ export class ModifyExpensesIncome {
             } catch (error) {
                 console.log(error);
             }
-
-
         }
 
     }

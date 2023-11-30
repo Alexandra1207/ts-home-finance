@@ -4,7 +4,10 @@ import config from "../../config/config.js";
 
 export class Sidebar {
 
+    isBurgerInitialized = false;
+
     static sidebarButtons(page) {
+
         const mainLink = document.getElementById('main-link');
         const incomeExpensesLink = document.getElementById('income-expenses-link');
         const categoriesButton = document.getElementById("categories-btn");
@@ -20,12 +23,15 @@ export class Sidebar {
         const sidebar = document.querySelector('.sidebar');
         const headerLogoLink = document.querySelector('.header-logo-link');
 
+        if (!this.isBurgerInitialized) {
+            burgerButton.addEventListener('click', function () {
+                burgerButton.classList.toggle('active');
+                sidebar.classList.toggle('open');
+                headerLogoLink.classList.toggle('d-none');
+            });
+            this.isBurgerInitialized = true;
+        }
 
-        burgerButton.addEventListener('click', function () {
-            burgerButton.classList.toggle('active');
-            sidebar.classList.toggle('open');
-            headerLogoLink.classList.toggle('d-none');
-        });
 
         mainLink.classList.remove('active');
         incomeExpensesLink.classList.remove('active');

@@ -2,24 +2,28 @@ import {Sidebar} from "./sidebar.js";
 import {CustomHttp} from "../services/custom-http.js";
 import config from "../../config/config.js";
 import {Functions} from "./functions.js";
+import button from "bootstrap/js/src/button";
 
 export class IncomeExpenses {
     constructor() {
         this.incomeExpense = null;
         this.createIncomeButton = document.getElementById('create-income');
-        this.createIncomeExpense = document.getElementById('create-expense');
+        this.createExpenseButton = document.getElementById('create-expense');
+        this.tableBody = document.getElementById('table-body');
+
         this.agreeDeleteBtn = document.getElementById('agree-delete-btn');
         this.disagreeDeleteBtn = document.getElementById('disagree-delete-btn');
 
         Sidebar.sidebarButtons('income-expenses');
+        Functions.initOperations(this.handleButtonClick.bind(this));
+        this.showOperations();
 
         this.createIncomeButton.addEventListener('click', function () {
             location.href = '#/create-expenses-income';
         });
-        this.createIncomeExpense.addEventListener('click', function () {
+        this.createExpenseButton.addEventListener('click', function () {
             location.href = '#/create-expenses-income';
         });
-
 
         this.agreeDeleteBtn.addEventListener('click', function () {
             const dataId = this.parentNode.parentNode.getAttribute('data-id');
@@ -34,114 +38,26 @@ export class IncomeExpenses {
             document.getElementById('myOverlay').classList.add('d-none');
         });
 
-        this.init();
     }
 
-    async init() {
-        const buttons = document.querySelectorAll('.btn');
-        const that = this;
 
-        const allBtn = document.getElementById('all-btn');
-        const todayBtn = document.getElementById('today-btn');
-        const weekBtn = document.getElementById('week-btn');
-        const monthBtn = document.getElementById('month-btn');
-        const yearBtn = document.getElementById('year-btn');
-        const intervalBtn = document.getElementById('interval-btn');
+    handleButtonClick(button) {
+        const period = button.id === 'interval' ? Functions.getIntervalPeriod() : `/operations?period=${button.id}`;
 
-        this.showOperations();
-
-        Functions.inputDates();
-
-        buttons.forEach(function (button) {
-            button.addEventListener('click', function () {
-
-
-                buttons.forEach(function (btn) {
-                    btn.classList.remove('active');
-                });
-                this.classList.add('active');
-
-
-                if (button === allBtn) {
-                    that.showOperations();
-                }
-
-                if (button === todayBtn) {
-                    that.showOperations('/operations?period=today');
-                }
-
-                if (button === weekBtn) {
-                    that.showOperations('/operations?period=week');
-                }
-
-                if (button === monthBtn) {
-                    that.showOperations('/operations?period=month');
-                }
-
-                if (button === yearBtn) {
-                    that.showOperations('/operations?period=year');
-                }
-
-                const inputDateFrom = document.getElementById('input-date-from');
-                const inputDateTo = document.getElementById('input-date-to');
-                const labelDateFrom = document.getElementById('label-date-from');
-                const labelDateTo = document.getElementById('label-date-to');
-
-                if (labelDateFrom.classList.contains('text-danger')) {
-                    labelDateFrom.classList.remove('text-danger');
-                }
-                labelDateFrom.classList.remove('border-danger');
-                labelDateTo.classList.remove('text-danger');
-                labelDateTo.classList.remove('border-danger');
-
-
-                if (button !== intervalBtn) {
-                    if (inputDateTo || inputDateFrom) {
-                        labelDateFrom.classList.remove('d-none');
-                        labelDateTo.classList.remove('d-none');
-                        inputDateTo.classList.add('d-none');
-                        inputDateFrom.classList.add('d-none');
-                    }
-                }
-
-                if (button === intervalBtn) {
-                    if (!inputDateFrom && !inputDateTo) {
-                        labelDateFrom.classList.add('text-danger');
-                        labelDateFrom.classList.add('border-danger');
-                        labelDateTo.classList.add('text-danger');
-                        labelDateTo.classList.add('border-danger');
-                    } else if (!inputDateFrom && !inputDateTo.value) {
-                        labelDateFrom.classList.add('text-danger');
-                        labelDateFrom.classList.add('border-danger');
-                        inputDateTo.classList.add('is-invalid');
-                        ;
-                    } else if (!inputDateTo && !inputDateFrom.value) {
-                        labelDateTo.classList.add('text-danger');
-                        labelDateTo.classList.add('border-danger');
-                        inputDateFrom.classList.add('is-invalid');
-                    } else if (!inputDateFrom.value && !inputDateTo.value) {
-                        inputDateFrom.classList.add('is-invalid');
-                        ;
-                        inputDateTo.classList.add('is-invalid');
-                    } else {
-                        that.showOperations('/operations?period=interval&dateFrom=' + inputDateFrom.value + '&dateTo=' + inputDateTo.value);
-                        inputDateFrom.classList.remove('is-invalid');
-                        ;
-                        inputDateTo.classList.remove('is-invalid');
-                    }
-                }
-
-
-            });
-        });
-
+        if (period) {
+            Functions.returnLabelDates();
+            this.showOperations(period);
+        } else {
+            this.tableBody.innerHTML = '';
+        }
 
     }
 
     async showOperations(period = '/operations?period=all') {
+        // Functions.deleteUndefinedOperations();
+        const that = this;
 
-        const tableBody = document.getElementById('table-body');
-        tableBody.innerHTML = '';
+        this.tableBody.innerHTML = '';
 
         try {
             const result = await CustomHttp.request(config.host + period);
@@ -165,16 +81,19 @@ export class IncomeExpenses {
             th.innerHTML = index + 1;
 
             const type = document.createElement('td');
-            if (operation.type === "expense") {
-                type.className = 'text-danger';
-                type.innerHTML = 'расход';
-            }
-            if (operation.type === "income") {
-                type.className = 'text-success';
-                type.innerHTML = 'доход';
-            }
+            type.className = operation.type === "expense" ? 'text-danger' : 'text-success';
+            type.innerHTML = operation.type === "expense" ? 'расход' : 'доход';
+            // if (operation.type === "expense") {
+            //     type.className = 'text-danger';
+            //     type.innerHTML = 'расход';
+            // }
+            // if (operation.type === "income") {
+            //     type.className = 'text-success';
+            //     type.innerHTML = 'доход';
+            // }
 
             const category = document.createElement('td');
+            console.log(operation.category);
             category.innerHTML = operation.category.toLowerCase();
 
             const amount = document.createElement('td');
@@ -208,7 +127,7 @@ export class IncomeExpenses {
             row.appendChild(comment);
             row.appendChild(buttons);
 
-            tableBody.appendChild(row);
+            that.tableBody.appendChild(row);
 
 
             const deleteButtons = document.querySelectorAll('.trash-btn');
@@ -243,7 +162,5 @@ export class IncomeExpenses {
             const day = parts[2];
             return day + "." + month + "." + year;
         }
-
     }
-
 }

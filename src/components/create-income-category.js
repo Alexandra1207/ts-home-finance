@@ -12,14 +12,14 @@ export class CreateIncomeCategory {
             const categoryName = document.getElementById('category-name');
             if (categoryName.value) {
                 Functions.createCategory('income/', categoryName.value);
-                location.href = '#/income'
+                location.href = '#/income';
             } else {
                 categoryName.style.borderColor = 'red';
             }
         });
 
         this.cancelButton.addEventListener('click', function () {
-            location.href = '#/income'
+            location.href = '#/income';
         });
     }
 
