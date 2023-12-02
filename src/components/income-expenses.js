@@ -2,7 +2,6 @@ import {Sidebar} from "./sidebar.js";
 import {CustomHttp} from "../services/custom-http.js";
 import config from "../../config/config.js";
 import {Functions} from "./functions.js";
-import button from "bootstrap/js/src/button";
 
 export class IncomeExpenses {
     constructor() {
@@ -54,7 +53,6 @@ export class IncomeExpenses {
     }
 
     async showOperations(period = '/operations?period=all') {
-        // Functions.deleteUndefinedOperations();
         const that = this;
 
         this.tableBody.innerHTML = '';
@@ -83,17 +81,8 @@ export class IncomeExpenses {
             const type = document.createElement('td');
             type.className = operation.type === "expense" ? 'text-danger' : 'text-success';
             type.innerHTML = operation.type === "expense" ? 'расход' : 'доход';
-            // if (operation.type === "expense") {
-            //     type.className = 'text-danger';
-            //     type.innerHTML = 'расход';
-            // }
-            // if (operation.type === "income") {
-            //     type.className = 'text-success';
-            //     type.innerHTML = 'доход';
-            // }
 
             const category = document.createElement('td');
-            console.log(operation.category);
             category.innerHTML = operation.category.toLowerCase();
 
             const amount = document.createElement('td');

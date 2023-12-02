@@ -137,7 +137,6 @@ export class Form {
                     rememberMe: rememberMe
                 })
 
-                console.log(result);
                 if (result) {
                     if (result.error || !result.tokens.accessToken || !result.tokens.refreshToken || !result.user.name || !result.user.lastName || !result.user.id) {
                         throw new Error(result.message);
@@ -154,7 +153,6 @@ export class Form {
             } catch (error) {
                 return console.log(error);
             }
-
         }
     }
 }

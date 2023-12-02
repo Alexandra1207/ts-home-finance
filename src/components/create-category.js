@@ -2,7 +2,6 @@ import {CustomHttp} from "../services/custom-http.js";
 import config from "../../config/config.js";
 import {Sidebar} from "./sidebar.js";
 
-
 export class CreateCategory {
     constructor(page) {
         this.createButton = document.getElementById('create-btn');

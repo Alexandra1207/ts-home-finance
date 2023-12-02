@@ -1,18 +1,13 @@
 import {Form} from "./components/form.js";
 import {Main} from "./components/main.js"
 import {Auth} from "./services/auth.js"
-// import {ModifyExpensesCategory} from "./components/modify-expenses-category.js"
-import {Income} from "./components/income.js"
-import {CreateIncomeCategory} from "./components/create-income-category.js";
-// import {ModifyIncomeCategory} from "./components/modify-income-category.js";
-import {Expenses} from "./components/expenses.js";
-import {CreateExpensesCategory} from "./components/create-expenses-category.js";
 import {CreateExpensesIncome} from "./components/create-expenses-income.js";
 import {IncomeExpenses} from "./components/income-expenses.js";
 import {ModifyExpensesIncome} from "./components/modify-expenses-income.js";
 import {Sidebar} from "./components/sidebar.js";
 import {ModifyCategory} from "./components/modify-category.js";
 import {CreateCategory} from "./components/create-category.js";
+import {Categories} from "./components/categories.js";
 
 export class Router {
     constructor() {
@@ -68,31 +63,21 @@ export class Router {
                 template: 'templates/income.html',
                 styles: 'styles/income-expenses.css',
                 load: () => {
-                    new Income();
+                    new Categories('income');
                 }
             },
-            // {
-            //     route: '#/create-income-category',
-            //     title: 'Создание категории расходов',
-            //     template: 'templates/create-income-category.html',
-            //     styles: 'styles/income-expenses.css',
-            //     load: () => {
-            //         new CreateIncomeCategory();
-            //     }
-            // },
-            // {
-            //     route: '#/create-expenses-category',
-            //     title: 'Создание категории расходов',
-            //     template: 'templates/create-expenses-category.html',
-            //     styles: 'styles/create-expenses-category.css',
-            //     load: () => {
-            //         new CreateExpensesCategory();
-            //     }
-            // },
-
+            {
+                route: '#/expenses',
+                title: 'Расходы',
+                template: 'templates/expenses.html',
+                styles: 'styles/income-expenses.css',
+                load: () => {
+                    new Categories('expenses');
+                }
+            },
             {
                 route: '#/create-income-category',
-                title: 'Создание категории расходов',
+                title: 'Создание категории доходов',
                 template: 'templates/create-income-category.html',
                 styles: 'styles/income-expenses.css',
                 load: () => {
@@ -103,31 +88,11 @@ export class Router {
                 route: '#/create-expenses-category',
                 title: 'Создание категории расходов',
                 template: 'templates/create-expenses-category.html',
-                styles: 'styles/create-expenses-category.css',
+                styles: 'styles/income-expenses.css',
                 load: () => {
                     new CreateCategory('expenses');
                 }
             },
-
-
-            // {
-            //     route: '#/modify-income-category',
-            //     title: 'Редактирование категории доходов',
-            //     template: 'templates/modify-income-category.html',
-            //     styles: 'styles/income-expenses.css',
-            //     load: () => {
-            //         new ModifyIncomeCategory();
-            //     }
-            // },
-            // {
-            //     route: '#/modify-expenses-category',
-            //     title: 'Редактирование категории расходов',
-            //     template: 'templates/modify-expenses-category.html',
-            //     styles: 'styles/income-expenses.css',
-            //     load: () => {
-            //         new ModifyExpensesCategory();
-            //     }
-            // },
             {
                 route: '#/modify-income-category',
                 title: 'Редактирование категории доходов',
@@ -144,24 +109,6 @@ export class Router {
                 styles: 'styles/income-expenses.css',
                 load: () => {
                     new ModifyCategory('expenses');
-                }
-            },
-            {
-                route: '#/expenses',
-                title: 'Расходы',
-                template: 'templates/expenses.html',
-                styles: 'styles/income-expenses.css',
-                load: () => {
-                    new Expenses();
-                }
-            },
-            {
-                route: '#/create-expenses-category',
-                title: 'Создание категории расходов',
-                template: 'templates/create-expenses-category.html',
-                styles: 'styles/create-expenses-category.css',
-                load: () => {
-                    new CreateExpensesCategory();
                 }
             },
             {
@@ -231,7 +178,6 @@ export class Router {
         if (newRoute.title) {
             this.titleElement.innerText = newRoute.title;
         }
-
         newRoute.load();
     }
 }

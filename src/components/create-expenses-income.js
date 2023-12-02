@@ -1,12 +1,12 @@
 import {Sidebar} from "./sidebar.js";
 import {CustomHttp} from "../services/custom-http.js";
-import config from "../../config/config";
+import config from "../../config/config.js";
+import {Functions} from "./functions.js";
 
 export class CreateExpensesIncome {
     constructor() {
         this.selectTypeElement = document.getElementById('select-type');
         this.selectCategoryElement = document.getElementById('select-category');
-
         this.createButton = document.getElementById('create-btn');
         this.cancelButton = document.getElementById('cancel-btn');
         this.sum = document.getElementById('sum');
@@ -30,7 +30,7 @@ export class CreateExpensesIncome {
             while (selectCategoryElement.options.length > 1) {
                 selectCategoryElement.remove(1);
             }
-            that.typeRequest(typeOperation);
+            Functions.typeRequest(typeOperation);
         });
 
         this.createButton.addEventListener('click', function () {
@@ -72,16 +72,6 @@ export class CreateExpensesIncome {
         });
 
         return !hasEmptyField;
-    }
-
-    async typeRequest(type) {
-        const result = await CustomHttp.request(config.host + type);
-        result.forEach(item => {
-            const optionElement = document.createElement('option');
-            optionElement.value = item.id;
-            optionElement.text = item.title;
-            this.selectCategoryElement.appendChild(optionElement);
-        });
     }
 
     async createOperation() {
