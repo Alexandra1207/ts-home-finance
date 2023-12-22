@@ -1,15 +1,24 @@
-import {Form} from "./components/form.js";
-import {Main} from "./components/main.js"
-import {Auth} from "./services/auth.js"
-import {CreateExpensesIncome} from "./components/create-expenses-income.js";
-import {IncomeExpenses} from "./components/income-expenses.js";
-import {ModifyExpensesIncome} from "./components/modify-expenses-income.js";
-import {Sidebar} from "./components/sidebar.js";
-import {ModifyCategory} from "./components/modify-category.js";
-import {CreateCategory} from "./components/create-category.js";
-import {Categories} from "./components/categories.js";
+import {Form} from "./components/form";
+import {Main} from "./components/main"
+import {Auth} from "./services/auth"
+import {CreateExpensesIncome} from "./components/create-expenses-income";
+import {IncomeExpenses} from "./components/income-expenses";
+import {ModifyExpensesIncome} from "./components/modify-expenses-income";
+import {Sidebar} from "./components/sidebar";
+import {ModifyCategory} from "./components/modify-category";
+import {CreateCategory} from "./components/create-category";
+import {Categories} from "./components/categories";
+import {RouteType} from "./types/route.type";
 
 export class Router {
+    readonly contentElement: HTMLElement | null;
+    readonly header: HTMLElement | null;
+    readonly sidebarElement: HTMLElement | null;
+    readonly stylesElement: HTMLElement | null;
+    readonly titleElement: HTMLElement | null;
+
+    private routes: RouteType[];
+
     constructor() {
         this.contentElement = document.getElementById('content');
         this.header = document.getElementById('header');
@@ -44,6 +53,7 @@ export class Router {
                 title: 'Главная',
                 template: 'templates/index.html',
                 styles: 'styles/index.css',
+                sidebar: true,
                 load: () => {
                     new Main();
                 }
@@ -53,6 +63,7 @@ export class Router {
                 title: 'Доходы и расходы',
                 template: 'templates/income-expenses.html',
                 styles: 'styles/income-expenses.css',
+                sidebar: true,
                 load: () => {
                     new IncomeExpenses();
                 }
@@ -62,6 +73,7 @@ export class Router {
                 title: 'Доходы',
                 template: 'templates/income.html',
                 styles: 'styles/income-expenses.css',
+                sidebar: true,
                 load: () => {
                     new Categories('income');
                 }
@@ -71,6 +83,7 @@ export class Router {
                 title: 'Расходы',
                 template: 'templates/expenses.html',
                 styles: 'styles/income-expenses.css',
+                sidebar: true,
                 load: () => {
                     new Categories('expenses');
                 }
@@ -80,6 +93,7 @@ export class Router {
                 title: 'Создание категории доходов',
                 template: 'templates/create-income-category.html',
                 styles: 'styles/income-expenses.css',
+                sidebar: true,
                 load: () => {
                     new CreateCategory('income');
                 }
@@ -89,6 +103,7 @@ export class Router {
                 title: 'Создание категории расходов',
                 template: 'templates/create-expenses-category.html',
                 styles: 'styles/income-expenses.css',
+                sidebar: true,
                 load: () => {
                     new CreateCategory('expenses');
                 }
@@ -98,6 +113,7 @@ export class Router {
                 title: 'Редактирование категории доходов',
                 template: 'templates/modify-income-category.html',
                 styles: 'styles/income-expenses.css',
+                sidebar: true,
                 load: () => {
                     new ModifyCategory('income');
                 }
@@ -107,6 +123,7 @@ export class Router {
                 title: 'Редактирование категории расходов',
                 template: 'templates/modify-expenses-category.html',
                 styles: 'styles/income-expenses.css',
+                sidebar: true,
                 load: () => {
                     new ModifyCategory('expenses');
                 }
@@ -116,6 +133,7 @@ export class Router {
                 title: 'Создание дохода/расхода',
                 template: 'templates/create-expenses-income.html',
                 styles: 'styles/income-expenses.css',
+                sidebar: true,
                 load: () => {
                     new CreateExpensesIncome();
                 }
@@ -125,12 +143,17 @@ export class Router {
                 title: 'Редактирование дохода/расхода',
                 template: 'templates/modify-expenses-income.html',
                 styles: 'styles/income-expenses.css',
+                sidebar: true,
                 load: () => {
                     new ModifyExpensesIncome();
                 }
             },
             {
                 route: '#/logout',
+                title: '',
+                template: '',
+                styles: '',
+                sidebar: false,
                 load: () => {
                     Auth.logout();
                 }
@@ -138,44 +161,56 @@ export class Router {
         ]
     }
 
-    async openRoute() {
+    public async openRoute(): Promise<void> {
 
-        const urlRoute = window.location.hash.split('?')[0];
+        const urlRoute: string = window.location.hash.split('?')[0];
         if (urlRoute === '') {
-            await Auth.logout();
+            // await Auth.logout();
             window.location.href = '#/login';
             return;
         }
 
-        const newRoute = this.routes.find(item => {
+        const newRoute: RouteType | undefined = this.routes.find(item => {
             return item.route === urlRoute;
         });
 
 
-        if (newRoute.sidebar !== false) {
-            this.sidebarElement.classList.remove('d-none');
-            this.sidebarElement.innerHTML = await fetch('templates/sidebar.html').then(response => response.text());
-            Sidebar.getSidebarInfo();
-            Sidebar.getBalance();
-        } else {
-            this.sidebarElement.innerHTML = '';
-            this.sidebarElement.classList.add('d-none');
-            this.header.classList.add('d-none');
-            this.contentElement.classList.remove('w-auto');
-            this.contentElement.classList.remove('p-5')
+        if (newRoute) {
+            if (newRoute.sidebar) {
+                if (this.sidebarElement) {
+                    this.sidebarElement.classList.remove('d-none');
+                }
+                if (this.sidebarElement) {
+                    this.sidebarElement.innerHTML = await fetch('templates/sidebar.html').then(response => response.text());
+                }
+                Sidebar.getSidebarInfo();
+                Sidebar.getBalance();
+            } else {
+                if (this.sidebarElement) {
+                    this.sidebarElement.innerHTML = '';
+                    this.sidebarElement.classList.add('d-none');
+                }
+                if (this.header) {
+                    this.header.classList.add('d-none');
+                }
+                if (this.contentElement) {
+                    this.contentElement.classList.remove('w-auto');
+                    this.contentElement.classList.remove('p-5');
+                }
+            }
         }
 
         if (!newRoute) {
             window.location.href = '#/login';
             return;
         }
-        if (newRoute.template) {
+        if (newRoute.template && this.contentElement) {
             this.contentElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
         }
-        if (newRoute.styles) {
+        if (newRoute.styles && this.stylesElement) {
             this.stylesElement.setAttribute('href', newRoute.styles);
         }
-        if (newRoute.title) {
+        if (newRoute.title && this.titleElement) {
             this.titleElement.innerText = newRoute.title;
         }
         newRoute.load();
