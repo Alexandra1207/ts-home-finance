@@ -16,6 +16,7 @@ module.exports = {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: /node_modules/,
+
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -23,6 +24,7 @@ module.exports = {
             },
         ],
     },
+
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
     },
@@ -50,32 +52,5 @@ module.exports = {
             ],
         }),
     ],
-    // module: {
-    //     rules: [
-    //         // ...
-    //         {
-    //             test: /\.css$/,
-    //             use: ['style-loader', 'css-loader'],
-    //         },
-    //         {
-    //             test: /\.tsx?$/,
-    //             loader: 'ts-loader',
-    //             exclude: /node_modules/,
-    //         },
-    //         {
-    //             test: /\.js$/,
-    //             exclude: /node_modules/,
-    //             use: {
-    //                 loader: 'babel-loader',
-    //                 options: {
-    //                     presets: ['@babel/preset-env']
-    //                 }
-    //             }
-    //         },
-    //         {
-    //             test: /\.(woff|woff2|eot|ttf|otf)$/,
-    //             use: ['file-loader'],
-    //         },
-    //     ],
-    // },
+
 };

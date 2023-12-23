@@ -6,7 +6,6 @@ import {CategoriesType} from "../types/categories.type";
 import {OperationsType} from "../types/operations.type";
 import {TotalAmountByCategoryType} from "../types/total-amount-by-Category.type";
 import {Chart} from "chart.js";
-import {ErrorType} from "../types/error.type";
 
 
 export class Main {
@@ -17,7 +16,7 @@ export class Main {
         this.showPieChart('expense');
     }
 
-    private handleButtonClick(button: HTMLElement): void {
+    handleButtonClick(button: HTMLElement) {
 
         const period: string | null = button.id === 'interval' ? Functions.getIntervalPeriod() : `/operations?period=${button.id}`;
 
@@ -51,8 +50,8 @@ export class Main {
         }
 
 
-        const arrayCategories: CategoriesType[] | ErrorType = await CustomHttp.request(config.host + typeApiUrl);
-        const allCategories: (string | undefined)[] = (arrayCategories as CategoriesType[]).map(item => item.title);
+        const arrayCategories: CategoriesType[] = await CustomHttp.request(config.host + typeApiUrl);
+        const allCategories: string[] = arrayCategories.map((item: CategoriesType) => item.title);
         const operations: OperationsType[] = await CustomHttp.request(config.host + period);
         const allOperations: OperationsType[] = operations.filter(item => item.type === type);
         const totalAmountByCategory: number[] = allCategories.map(category => {
@@ -65,7 +64,7 @@ export class Main {
             return sum;
         });
 
-        const clearTotalAmountByCategory: TotalAmountByCategoryType[] = allCategories.reduce((acc: TotalAmountByCategoryType[], category: string | undefined, index: number) => {
+        const clearTotalAmountByCategory: TotalAmountByCategoryType[] = allCategories.reduce((acc: TotalAmountByCategoryType[], category: string | undefined, index: number ) => {
             if (totalAmountByCategory[index] !== 0 && totalAmountByCategory[index] !== 0 && category) {
                 acc.push({category: category, amount: totalAmountByCategory[index]});
             }
